@@ -6,7 +6,7 @@
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/09/06 19:55:41 by drafe            ###   ########.fr        #
+#    Updated: 2019/09/06 20:49:51 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIBS = -L./Libft/ -lft\
 	-lmlx -framework OpenGL -framework AppKit
 
 OBJS = main.o\
+	
 
 all: $(NAME)
 

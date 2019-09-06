@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/06 18:06:26 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/06 21:27:27 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,34 @@ typedef struct		s_crds
 
 typedef struct		s_w
 {
-	char			*f_name;
+	char			*img;
 	int				file_w;
 	int				file_h;
 	int				file_l;
 	int				width;
 	int				height;
-	int				x_mid;
-	int				y_mid;
+	int				x_scale;
+	int				y_scale;
 	int				map_ln;
 	int				iso_p;
 	int				p_nb;
 	int				mv;
+	int				color;
+	int				ln_sz;
+	int				bitspp;
+	int				endi;
+	int				iso_p;
 	double			angle;
 	t_list			*all_p;
 	t_crds			*p;
 	void			*mlx_p;
 	void			*win_p;
+	void			*img_p;
 }					t_w;
 
 t_crds				*fdf_init_one_p(t_w *new_w, char *s, int y);
 
-void				fdf_new_win(t_w *new_w, char *source_f);
+void				new_win(t_w *new_w);
 
 int					fdf_dw_ln(t_crds *point, t_w new_w, int p1, int p2);
 int					fdf_dw_ln2(t_crds *point, t_w new_w, int p1, int p2);
