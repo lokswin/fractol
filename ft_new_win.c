@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_win.c                                          :+:      :+:    :+:   */
+/*   ft_new_win.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/06 20:57:08 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/07 19:38:37 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		w_layout(t_w *new_w)
+static void		ft_w_layout(t_w *new_w)
 {
-	int			w;
-	int			h;
-	int			max;
-
 	printf("\n-------w_layout start-------\n");
 	new_w->width = 2500;
 	new_w->height = 1300;
@@ -31,12 +27,13 @@ static void		w_layout(t_w *new_w)
 ** **************************************************************************
 */
 
-void		new_win(t_w *new_w)
+void			ft_new_win(t_w *new_w)
 {
 	printf("\n-------new_win start-------\n");
-	new_w->iso_p = 0;
-	new_w->angle = 0.46373398;//0.523599;
-	fdf_w_layout(new_w);
+	new_w->zm = 1;
+	new_w->mv_y = 0;
+	new_w->mv_x = 0;
+	ft_w_layout(new_w);
 	if (!(new_w->mlx_p = mlx_init()))
 	{
 		ft_putstr_fd("mlx error", 2);
@@ -44,7 +41,7 @@ void		new_win(t_w *new_w)
 	}
 	new_w->img_p = mlx_new_image(new_w->mlx_p, new_w->width, new_w->height);
 	new_w->color = mlx_get_color_value(new_w->mlx_p, 0xFFFFFF);
-	new_w->win_p = fdf_ui(new_w, 1);
+	ft_ui(new_w);
 	if (!new_w->mlx_p || !new_w->win_p || !new_w->img_p)
 	{
 		ft_putstr_fd("mlx error", 2);
