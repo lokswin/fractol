@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/07 19:38:37 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/07 21:23:49 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void		ft_w_layout(t_w *new_w)
 {
 	printf("\n-------w_layout start-------\n");
-	new_w->width = 2500;
-	new_w->height = 1300;
+	new_w->width = 450;
+	new_w->height = 450;
 	printf("-------w_layout end-------\n");
 }
 
@@ -30,9 +30,7 @@ static void		ft_w_layout(t_w *new_w)
 void			ft_new_win(t_w *new_w)
 {
 	printf("\n-------new_win start-------\n");
-	new_w->zm = 1;
-	new_w->mv_y = 0;
-	new_w->mv_x = 0;
+	new_w->f_type = 0;
 	ft_w_layout(new_w);
 	if (!(new_w->mlx_p = mlx_init()))
 	{
@@ -40,7 +38,7 @@ void			ft_new_win(t_w *new_w)
 		exit (1);
 	}
 	new_w->img_p = mlx_new_image(new_w->mlx_p, new_w->width, new_w->height);
-	new_w->color = mlx_get_color_value(new_w->mlx_p, 0xFFFFFF);
+	new_w->color = mlx_get_color_value(new_w->mlx_p, 0xFFF356);
 	ft_ui(new_w);
 	if (!new_w->mlx_p || !new_w->win_p || !new_w->img_p)
 	{
