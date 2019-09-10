@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/09 21:25:55 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/10 21:05:36 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "mlx.h"
 #include <stdio.h>
 #include <math.h>
-#include <time.h>
+//#include <time.h>
 //# define ABS(var)((var) < 0 ? -(var) : (var))
 
 /*
@@ -36,6 +36,7 @@ typedef struct		s_w
 	int				height;
 	double			x_scl;
 	double			y_scl;
+	int				max_i;
 	int				color;
 	int				ln_sz;
 	int				bitspp;

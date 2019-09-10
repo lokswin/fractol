@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/09 21:27:27 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/10 17:24:07 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int		ft_color_iter(int i, int i_max)
 	double		t;
 	
 	//printf("\n-------ft_color_iter start-------\n");
-	color = 0x000000;
+	color = 0xFFFFFF;
 	t = (double)i / (double)i_max;
 	red = (int)(9 * (1 - t) * pow(t, 3) * 255);
 	green = (int)(15 * pow((1 - t), 2) * pow(t, 2) * 255);

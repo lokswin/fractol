@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/09 19:25:42 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/10 21:06:20 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void		ft_w_layout(t_w *new_w)
 {
 	printf("\n-------w_layout start-------\n");
-	new_w->width = 450;
-	new_w->height = 450;
+	new_w->width = 1350;
+	new_w->height = 1350;
 	printf("-------w_layout end-------\n");
 }
 
@@ -30,7 +30,7 @@ static void		ft_w_layout(t_w *new_w)
 void			ft_new_win(t_w *new_w)
 {
 	printf("\n-------new_win start-------\n");
-	new_w->f_type = 0;
+	new_w->max_i = 50;
 	ft_w_layout(new_w);
 	if (!(new_w->mlx_p = mlx_init()))
 	{

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/09 21:25:51 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/10 21:08:09 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ static void		ft_crds_scale(t_w *w, int px, int py)
 ** **************************************************************************
 */
 
-static void		ft_img_pxl_put(t_w *w, int x, int y, int i, int i_max)
+static void		ft_img_pxl_put(t_w *w, int x, int y, int i)
 {
 	int			j;
 	double		t;
 
 	//printf("\n-------ft_img_pxl_put start-------\n");
 	//printf("x=%d, y=%d, bitspp=%d, ln_sz=%d\n", x, y, w->bitspp, w->ln_sz);
-	t = (double)i / (double)i_max;
+	t = (double)i / (double)w->max_i;
 	j = (x * (w->bitspp / 8)) + (y * w->ln_sz);
 	w->img[j] = (int)(9 * (1 - t) * pow(t, 3) * 255);//w->color; // B — Blue
 	w->img[++j] = (int)(15 * pow((1 - t), 2) * pow(t, 2) * 255) >> 8;//w->color >> 8; // G — Green
@@ -100,7 +100,6 @@ static void		ft_img_pxl_put(t_w *w, int x, int y, int i, int i_max)
 static void		ft_mandelbrot(t_w *w, int px, int py)
 {
 	int			i;
-	int			max_i;
 	double		re;
 	double		im;
 	double		x0;
@@ -110,12 +109,12 @@ static void		ft_mandelbrot(t_w *w, int px, int py)
 
 	//printf("\n-------ft_pxl_analize start-px1=%d py1=%d-\n", px, py);
 	i = 0;
-	max_i = 50;
+	w->max_i = 20;
 	x0 = w->x_scl;
 	y0 = w->y_scl;
 	x = 0.0;
 	y = 0.0;
-	while ((x*x + y*y <= 2*2)  &&  (i < max_i))
+	while ((x*x + y*y <= 2*2)  &&  (i < w->max_i))
 	{
 		re = x;
 		im = y;
@@ -123,8 +122,8 @@ static void		ft_mandelbrot(t_w *w, int px, int py)
  		y = (2 * re * im) + w->y_scl;
 		i++;
 	}
-	w->color = ft_color_iter(i, max_i);//0xFFF245;//ft_color_iter(i, max_i);
-	ft_img_pxl_put(w, px, py, i, max_i);
+	w->color = ft_color_iter(i, w->max_i);//0xFFF245;//ft_color_iter(i, max_i);
+	ft_img_pxl_put(w, px, py, i);
 	//printf("\n-------ft_pxl_analyze end-------\n");
 }
 	/*
@@ -140,6 +139,24 @@ static void		ft_mandelbrot(t_w *w, int px, int py)
 
 /*
 ** **************************************************************************
+**	void ft_draw_man(t_w *w)
+**	Function for draw man
+** **************************************************************************
+*/
+static void		ft_draw_man(t_w *w)
+{
+	char		*out_str;
+
+	if (((int)w->zm < 2147483647) || ((int)w->zm < -2147483647))
+	{
+		out_str = ft_strjoin("zoom = ", ft_itoa((int)w->zm));
+		mlx_string_put(w->mlx_p, w->win_p, 5, w->height - 20, 0xFFFFFF, out_str);
+		ft_strdel(&out_str);
+	}
+}
+
+/*
+** **************************************************************************
 **	void ft_draw(t_w *w)
 **	Function for pixel iteration
 ** **************************************************************************
@@ -151,7 +168,7 @@ void			ft_draw(t_w *w)
 	int			j;
 
 	i = 0;
-	printf("\n-------ft_draw start--zm%f--x%f--y%f-\n", w->zm, w->mv_x, w->mv_y);
+	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
 	while (i < w->width)
 	{
 		j = 0;
@@ -164,8 +181,11 @@ void			ft_draw(t_w *w)
 		i++;
 	}
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);	
+	ft_draw_man(w);
 	printf("-------ft_draw end-------\n");
 }
+
+
 
 /*
 ** **************************************************************************
