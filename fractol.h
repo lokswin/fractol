@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/10 21:05:36 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/11 21:13:01 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "mlx.h"
 #include <stdio.h>
 #include <math.h>
+#include <pthread.h>
 //#include <time.h>
 //# define ABS(var)((var) < 0 ? -(var) : (var))
 
@@ -37,7 +38,9 @@ typedef struct		s_w
 	double			x_scl;
 	double			y_scl;
 	int				max_i;
-	int				color;
+	int				b_clr;
+	int				g_clr;
+	int				r_clr;
 	int				ln_sz;
 	int				bitspp;
 	int				endi;
@@ -52,12 +55,23 @@ typedef struct		s_w
 }					t_w;
 
 //t_crds			*fdf_init_one_p(t_w *new_w, char *s, int y);
-void				ft_init_arr_fractols(t_w *new_w);
+void				ft_init_arr_fractols(t_w *w);
+
+
 void				ft_draw(t_w *w);
+
+void				ft_img_pxl_put(t_w *w, int x, int y, int i);
+void				ft_draw_man(t_w *w);
+int					ft_color_iter(int i, int i_max);
+
 void				ft_new_win(t_w *w);
 void				ft_ui(t_w *w);
 int					ft_ui_keys(int key, void *param);
 int					ft_ui_mouse(int key, int x, int y, void *param);
+
+void				ft_move_shape(t_w *w, int key);
+void				ft_change_shape(t_w *w, int key);
+void				ft_change_color(t_w *w, int key);
 
 
 //int					fdf_dw_ln(t_crds *point, t_w new_w, int p1, int p2);

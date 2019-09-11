@@ -6,7 +6,7 @@
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/09/07 17:59:55 by drafe            ###   ########.fr        #
+#    Updated: 2019/09/11 19:45:51 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ OBJS = main.o\
 	ft_new_win.o\
 	ft_draw.o\
 	ft_ui.o\
+	ft_ui_exp.o\
+	ft_colors.o\
 
 all: $(NAME)
 

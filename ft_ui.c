@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/11 18:55:29 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/11 21:17:48 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,31 @@
 
 /*
 ** **************************************************************************
-**	int ft_zoom(int x, int y)
-**	Function to  mouse input
+**	static void ft_zoom(t_w *w, int *x, int *y)
+**	Function to zoom with mouse
 ** **************************************************************************
+	//ZOOM keys
+    if(keyDown(SDLK_KP_PLUS))  {zoom *= pow(1.001, 1);}
+    if(keyDown(SDLK_KP_MINUS)) {zoom /= pow(1.001, 1);}
 */
+
 static void		ft_zoom(t_w *w, int *x, int *y)
 {
 	double		old_zm;
-
 	double		offs_x;
 	double		offs_y;
-	double		dzm;
+	//double		dzm;
 	
 	old_zm = w->zm;
 	w->zm *= pow(1.001, 1000);
-	dzm = w->zm - old_zm;
+	//dzm = w->zm - old_zm;
 	offs_x = 1.5 * (*x - w->width / 2) / (0.5 * old_zm * w->width) + w->mv_x;
 	offs_y = (*y - w->height / 2) / (0.5 * old_zm * w->height) + w->mv_y;
 	w->mv_x = offs_x;
 	w->mv_y = offs_y;
-	//w->mv_x = 0.0003 * (offs_x / w->zm);//(offs_x / dzm) - (offs_x / dzm);
-	//w->mv_y = 0.0003 * (offs_y / w->zm);//(offs_y / dzm) - (offs_y / dzm);
-	printf("x=%f y=%f offs_x=%f offs_y=%f\n",w->mv_x, w->mv_y, offs_x, offs_y);
+	//printf("x=%f y=%f offs_x=%f offs_y=%f\n",w->mv_x, w->mv_y, offs_x, offs_y);
 }
-/*	//offs_x = 1.5 * (*x - w->width / 2) / (0.5 * w->zm * w->width) + w->mv_x;
-	//offs_y = (*y - w->height / 2) / (0.5 * w->zm * w->height) + w->mv_y;
-	b = 1.5 * (w->width - w->width / 2) / (0.5 * w->zm * w->width) + w->mv_x;
-	b = (w->height - w->height / 2) / (0.5 * w->zm * w->height) + w->mv_y;
-	//if (offs_x > 0)
-		//w->mv_x -= offs_x / 2;//(offs_x - a) * (w->zm - 1);//fabs(offs_x)
-	//	w->mv_x -= 0.0003 * (1000 / w->zm);
-	//if (offs_x < 0)
-		//w->mv_x += offs_x / 2;
-	//	w->mv_x += 0.0003 * (1000 / w->zm);
-	//if (offs_y > 0)
-	//	w->mv_y -= offs_y / 2;//(offs_x - a) * (w->zm - 1);//fabs(offs_x)
-	//if (offs_y < 0)
-	//	w->mv_y += offs_y / 2;
- */
-    /* Zoom into the image.
-    image.setScaleX(image.getScaleX() * factor);
-    image.setScaleY(image.getScaleY() * factor);
-    // Calculate displacement of zooming position.
-    var dx = (currentMouseX - image.getLeft()) * (factor - 1),
-        dy = (currentMouseY - image.getTop()) * (factor - 1);
-    // Compensate for displacement.
-    image.setLeft(image.getLeft() - dx);
-    image.setTop(image.getTop() - dy);
-*/
+
 /*
 ** **************************************************************************
 **	int ft_ui_mouse(int key, int x, int y, void *param)
@@ -78,7 +55,7 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 	if ((key == 1) || (key == 2))// 5 4
 	{
 		ft_putstr("\nZooming...");
-		if (key == 5)
+		if (key == 2)
 			ft_zoom(w, &x, &y);
 		else
 			w->zm /= pow(1.001, 1000);
@@ -94,22 +71,12 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
     //ZOOM keys
     if(keyDown(SDLK_KP_PLUS))  {zoom *= pow(1.001, 1);}
     if(keyDown(SDLK_KP_MINUS)) {zoom /= pow(1.001, 1);}
-    //MOVE keys
-    if(keyDown(SDLK_DOWN))  {moveY += 0.0003 * frameTime / zoom;}
-    if(keyDown(SDLK_UP))  {moveY -= 0.0003 * frameTime / zoom;}
-    if(keyDown(SDLK_RIGHT)) {moveX += 0.0003 * frameTime / zoom;}
-    if(keyDown(SDLK_LEFT))  {moveX -= 0.0003 * frameTime / zoom;}
-    //CHANGE SHAPE keys
-    if(keyDown(SDLK_KP2)) {cIm += 0.0002 * frameTime / zoom;}
-    if(keyDown(SDLK_KP8)) {cIm -= 0.0002 * frameTime / zoom;}
-    if(keyDown(SDLK_KP6)) {cRe += 0.0002 * frameTime / zoom;}
-    if(keyDown(SDLK_KP4)) {cRe -= 0.0002 * frameTime / zoom;}
 */
 
 /*
 ** **************************************************************************
 **	int ft_ui_keys(int key, void *param)
-**	Function to handle key_input
+**	Function to handle key input
 ** **************************************************************************
 */
 
@@ -135,30 +102,15 @@ int		ft_ui_keys(int key, void *param)
 		ft_init_arr_fractols(w);
 		ft_draw(w);
 	}
-	if (key == 123)
-	{
-		w->mv_x -= 0.0003 * (1000 / w->zm);//new_w->zm / 10;
-		ft_draw(w);
-	}
-	if (key == 124)
-	{
-		
-		w->mv_x += 0.0003 * (1000 / w->zm);//new_w->zm / 10;//0.1;
-		ft_draw(w);
-	}
-	if (key == 125)
-	{
-		w->mv_y += w->zm / 10;//0.1;
-		ft_draw(w);
-	}
-	if (key == 126)
-	{
-		w->mv_y -= w->zm / 10;//0.1;
-		ft_draw(w);
-	}
+	if ((key == 15) || (key == 5) || (key == 11))
+		ft_change_color(w, key);
+	if ((key == 123) || (key == 124) || (key == 125) || (key == 126))
+		ft_move_shape(w, key);
+	if ((key == 91) || (key == 84) || (key == 86) || (key == 88))
+		ft_change_shape(w, key);
 	if (key == 53)
 		exit(0);
-		return ((int)param);
+	return ((int)param);
 }
 /*
 ** **************************************************************************

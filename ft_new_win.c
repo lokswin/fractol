@@ -6,47 +6,47 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/10 21:06:20 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/11 21:12:27 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		ft_w_layout(t_w *new_w)
+static void		ft_w_layout(t_w *w)
 {
 	printf("\n-------w_layout start-------\n");
-	new_w->width = 1350;
-	new_w->height = 1350;
+	w->width = 1350;
+	w->height = 1350;
 	printf("-------w_layout end-------\n");
 }
 
 /*
 ** **************************************************************************
-**	int fdf_new_win(t_w *new_w, int p_nb, char *source_f)
-**	Function to initialize window and image in struct t_w new_w
+**	int fdf_new_win(t_w *w, int p_nb, char *source_f)
+**	Function to initialize window and image in struct t_w w
 ** **************************************************************************
 */
 
-void			ft_new_win(t_w *new_w)
+void			ft_new_win(t_w *w)
 {
 	printf("\n-------new_win start-------\n");
-	new_w->max_i = 50;
-	ft_w_layout(new_w);
-	if (!(new_w->mlx_p = mlx_init()))
+	w->max_i = 50;
+	ft_w_layout(w);
+	if (!(w->mlx_p = mlx_init()))
 	{
 		ft_putstr_fd("mlx error", 2);
 		exit (1);
 	}
-	new_w->img_p = mlx_new_image(new_w->mlx_p, new_w->width, new_w->height);
-	new_w->color = mlx_get_color_value(new_w->mlx_p, 0xFFF356);
-	ft_ui(new_w);
-	if (!new_w->mlx_p || !new_w->win_p || !new_w->img_p)
+	w->img_p = mlx_new_image(w->mlx_p, w->width, w->height);
+	//w->color = mlx_get_color_value(w->mlx_p, 0xFFFFFF);
+	ft_ui(w);
+	if (!w->mlx_p || !w->win_p || !w->img_p)
 	{
 		ft_putstr_fd("mlx error", 2);
 		exit(1);
 	}
-	new_w->img = mlx_get_data_addr(new_w->img_p, \
-	&new_w->bitspp, &new_w->ln_sz, &new_w->endi);
+	w->img = mlx_get_data_addr(w->img_p, \
+	&w->bitspp, &w->ln_sz, &w->endi);
 	printf("-------new_win end-------\n");
 }
 
