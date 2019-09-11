@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/10 21:08:09 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/11 18:49:11 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ static void		ft_mandelbrot(t_w *w, int px, int py)
 
 	//printf("\n-------ft_pxl_analize start-px1=%d py1=%d-\n", px, py);
 	i = 0;
-	w->max_i = 20;
 	x0 = w->x_scl;
 	y0 = w->y_scl;
 	x = 0.0;
@@ -150,9 +149,12 @@ static void		ft_draw_man(t_w *w)
 	if (((int)w->zm < 2147483647) || ((int)w->zm < -2147483647))
 	{
 		out_str = ft_strjoin("zoom = ", ft_itoa((int)w->zm));
+		out_str = ft_strjoin(out_str, " iter = ");
+		out_str = ft_strjoin(out_str, ft_itoa((int)w->max_i));
 		mlx_string_put(w->mlx_p, w->win_p, 5, w->height - 20, 0xFFFFFF, out_str);
 		ft_strdel(&out_str);
 	}
+
 }
 
 /*
