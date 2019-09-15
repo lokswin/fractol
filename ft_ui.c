@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/11 21:17:48 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/15 16:47:23 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,18 @@
 **	static void ft_zoom(t_w *w, int *x, int *y)
 **	Function to zoom with mouse
 ** **************************************************************************
-	//ZOOM keys
-    if(keyDown(SDLK_KP_PLUS))  {zoom *= pow(1.001, 1);}
-    if(keyDown(SDLK_KP_MINUS)) {zoom /= pow(1.001, 1);}
 */
 
 static void		ft_zoom(t_w *w, int *x, int *y)
 {
-	double		old_zm;
 	double		offs_x;
 	double		offs_y;
-	//double		dzm;
-	
-	old_zm = w->zm;
-	w->zm *= pow(1.001, 1000);
-	//dzm = w->zm - old_zm;
-	offs_x = 1.5 * (*x - w->width / 2) / (0.5 * old_zm * w->width) + w->mv_x;
-	offs_y = (*y - w->height / 2) / (0.5 * old_zm * w->height) + w->mv_y;
+
+	offs_x = 1.5 * (*x - w->width / 2) / (0.5 * w->zm * w->width) + w->mv_x;
+	offs_y = (*y - w->height / 2) / (0.5 * w->zm * w->height) + w->mv_y;
 	w->mv_x = offs_x;
 	w->mv_y = offs_y;
-	//printf("x=%f y=%f offs_x=%f offs_y=%f\n",w->mv_x, w->mv_y, offs_x, offs_y);
+	w->zm *= pow(1.001, 1000);
 }
 
 /*
@@ -52,26 +44,18 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 
 	w = (t_w*)param;
 	ft_putnbr(key);
-	if ((key == 1) || (key == 2))// 5 4
+	if ((key == 5) || (key == 4))// 5 4
 	{
 		ft_putstr("\nZooming...");
-		if (key == 2)
+		if (key == 5)
 			ft_zoom(w, &x, &y);
 		else
 			w->zm /= pow(1.001, 1000);
 		ft_draw(w);
-		printf("%fdone!", w->zm);
+		ft_putstr("%fdone!");
 	}
 	return ((int)param);
 }
-/*
-	//new_w->mv_x += ((new_w->width / (-2)) + x) / (10 * new_w->zm);
-	//new_w->mv_y += ((new_w->width / 2) - y) / (10 * new_w->zm);
-	//new_w->zm / (new_w->width - y);
-    //ZOOM keys
-    if(keyDown(SDLK_KP_PLUS))  {zoom *= pow(1.001, 1);}
-    if(keyDown(SDLK_KP_MINUS)) {zoom /= pow(1.001, 1);}
-*/
 
 /*
 ** **************************************************************************
@@ -86,32 +70,33 @@ int		ft_ui_keys(int key, void *param)
 
 	w = (t_w*)param;
 	ft_putnbr(key);
-	if (key == 69)
+	if (key == PLUS_KEY)
 	{
 		w->max_i += 50;
 		ft_draw(w);
 	}
-	if (key == 78)
+	if (key == MINUS_KEY)
 	{
 		w->max_i -= 50;
 		ft_draw(w);
 	}
-	if (key == 49)
+	if (key == SPACE)
 	{
 		w->max_i = 100;
 		ft_init_arr_fractols(w);
 		ft_draw(w);
 	}
-	if ((key == 15) || (key == 5) || (key == 11))
+	if ((key == R_KEY) || (key == G_KEY) || (key == B_KEY))
 		ft_change_color(w, key);
-	if ((key == 123) || (key == 124) || (key == 125) || (key == 126))
+	if ((key == ARROW_U) || (key == ARROW_D) || (key == ARROW_R) || (key == ARROW_L))
 		ft_move_shape(w, key);
-	if ((key == 91) || (key == 84) || (key == 86) || (key == 88))
+	if ((key == NUM_2) || (key == NUM_4) || (key == NUM_6) || (key == NUM_8))
 		ft_change_shape(w, key);
-	if (key == 53)
+	if (key == ESC)
 		exit(0);
 	return ((int)param);
 }
+
 /*
 ** **************************************************************************
 **	void ft_ui(t_w *new_w)
@@ -124,7 +109,14 @@ void		ft_ui(t_w *new_w)
 	printf("\n-------ft_ui start-------\n");
 	new_w->win_p = mlx_new_window(new_w->mlx_p, new_w->width, new_w->height, "Fractol");
 	ft_putstr("Fractol man:\n\
-	ESC : quit Fractol");
+	ESC : quit Fractol\n\
+	R - change red color\n\
+	G - change greeb color\n\
+	B - change blue color\n\
+	SPACE - default set\n\
+	NUM(+) - add 50 iterations\n\
+	NUM(-) - remove 50 iterations\n\
+	");
 	printf("-------ft_ui end-------\n");
 }
 

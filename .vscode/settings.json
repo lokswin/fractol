@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "bitset": "c"
+        "bitset": "c",
+        "__hash_table": "c",
+        "algorithm": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/11 21:23:57 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/13 19:40:52 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@
 
 void		ft_move_shape(t_w *w, int key)
 {
-	if (key == 123)
+	if (key == ARROW_L)
 		w->mv_x -= 0.0003 * (1000 / w->zm);
-	if (key == 124)
+	if (key == ARROW_R)
 		w->mv_x += 0.0003 * (1000 / w->zm);
-	if (key == 125)
+	if (key == ARROW_D)
 		w->mv_y += 0.0003 * (1000 / w->zm);
-	if (key == 126)
+	if (key == ARROW_U)
 		w->mv_y -= 0.0003 * (1000 / w->zm);
 	ft_draw(w);
 }
@@ -51,13 +51,13 @@ void		ft_move_shape(t_w *w, int key)
 
 void		ft_change_shape(t_w *w, int key)
 {
-	if (key == 88)
+	if (key == NUM_6)
 		w->x_scl += 0.0002 * (1000 / w->zm);
-	if (key == 86)
+	if (key == NUM_4)
 		w->x_scl -= 0.0002 * (1000 / w->zm);
-	if (key == 84)
+	if (key == NUM_2)
 		w->y_scl += 0.0002 * (1000 / w->zm);
-	if (key == 91)
+	if (key == NUM_8)
 		w->y_scl -= 0.0002 * (1000 / w->zm);
 	//ft_draw(w);
 }
@@ -65,11 +65,11 @@ void		ft_change_shape(t_w *w, int key)
 
 void		ft_change_color(t_w *w, int key)
 {
-	if (key == 15)
+	if (key == R_KEY)
 		w->r_clr += 500000;
-	if (key == 5)
+	if (key == G_KEY)
 		w->g_clr += 50000;
-	if (key == 11)
+	if (key == B_KEY)
 		w->b_clr += 50000;
 	ft_draw(w);
 }

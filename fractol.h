@@ -6,13 +6,14 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/11 21:13:01 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/15 18:22:32 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 #include "./libft/libft.h"
+#include "keys.h"
 #include "mlx.h"
 #include <stdio.h>
 #include <math.h>
@@ -26,6 +27,14 @@
 **	Structure for store window settings
 ** **************************************************************************
 */
+
+typedef struct		s_pxl
+{
+	int				px;
+	int				py;
+	t_w				*w;
+}					t_pxl;
+
 
 typedef struct		s_w
 {

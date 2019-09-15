@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/11 21:04:39 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/15 18:29:59 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,9 @@
 
 static void		ft_crds_scale(t_w *w, int px, int py)
 {
-	//double		zm;
-	//double		mv_x;
-	//double		mv_y;
-
 	//printf("\n-------ft_crds_scale start-------\n");
 	w->x_scl = 1.5 * (px - w->width / 2) / (0.5 * w->zm * w->width) + w->mv_x;
     w->y_scl = (py - w->height / 2) / (0.5 * w->zm * w->height) + w->mv_y;
-	//printf("sc_px=%f sc_py=%f\n", w->x_scl, w->y_scl);
 	//printf("\n-------ft_crds_scale end-------\n");
 }
 
@@ -41,7 +36,34 @@ static void		ft_crds_scale(t_w *w, int px, int py)
 ** **************************************************************************
 */
 
-static void		ft_mandelbrot(t_w *w, int px, int py)
+static void		ft_mandelbrot(void *pxl_ptr)
+{
+	int			i;
+	double		re;
+	double		im;
+	double		x;
+	double		y;
+	t_pxl		*pxl;
+
+	//printf("\n-------ft_pxl_analize start-px1=%d py1=%d-\n", px, py);
+	i = 0;
+	x = 0.0;
+	y = 0.0;
+	pxl = (t_pxl*)pxl_ptr;
+	ft_crds_scale(pxl->w, pxl->px, pxl->py);
+	while ((x*x + y*y <= 2*2)  &&  (i < pxl->w->max_i))
+	{
+		re = x;
+		im = y;
+		x = (re * re) - (im * im) + pxl->w->x_scl;
+ 		y = (2 * re * im) + pxl->w->y_scl;
+		i++;
+	}
+	ft_color_iter(i, pxl->w->max_i);
+	ft_img_pxl_put(pxl->w, pxl->px, pxl->py, i);
+	//printf("\n-------ft_pxl_analyze end-------\n");
+}
+/*static void		ft_mandelbrot(void *pxl_ptr)
 {
 	int			i;
 	double		re;
@@ -53,7 +75,7 @@ static void		ft_mandelbrot(t_w *w, int px, int py)
 	i = 0;
 	x = 0.0;
 	y = 0.0;
-	while ((x*x + y*y <= 2*2)  &&  (i < w->max_i))
+	while ((x*x + y*y <= 2*2)  &&  (i < pxl_ptr.w.i_max))
 	{
 		re = x;
 		im = y;
@@ -61,11 +83,10 @@ static void		ft_mandelbrot(t_w *w, int px, int py)
  		y = (2 * re * im) + w->y_scl;
 		i++;
 	}
-	//w->color = 
-	ft_color_iter(i, w->max_i);//0xFFF245;//ft_color_iter(i, max_i);
+	ft_color_iter(i, w->max_i);
 	ft_img_pxl_put(w, px, py, i);
 	//printf("\n-------ft_pxl_analyze end-------\n");
-}
+}*/
 
 /*
 ** **************************************************************************
@@ -76,25 +97,85 @@ static void		ft_mandelbrot(t_w *w, int px, int py)
 
 void			ft_draw(t_w *w)
 {
-	int			i;
-	int			j;
+	pthread_t	th_id;
+	t_pxl		pxl;
+	void		*f;
+	int			res;
 
-	i = 0;
+	pxl.px = 0;
+	pxl.py = 0;
 	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
-	while (i < w->width)
+	f = ft_fractol_sel(w);
+	while (pxl.px < w->width)
 	{
-		j = 0;
-		while (j < w->height)
+		pxl.py = 0;
+		while (pxl.py < w->height)
 		{
-			ft_crds_scale(w, i, j);
-			ft_mandelbrot(w, i, j);
-			j++;
+			ft_thread_select(w, pxl.px, pxl.py, f);
+			if (!(res = pthread_create(&th_id, NULL, f, &pxl)))
+			{
+				ft_putstr_fd("Thread error", 2);
+				exit(res);
+			}
+			pthread_exit(NULL);
+			pxl.py++;
 		}
-		i++;
+		pxl.px++;
 	}
-	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);	
+	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_man(w);
 	printf("-------ft_draw end-------\n");
+}
+
+/*
+** **************************************************************************
+**	void ft_thread_select(t_w *w, int i, int j, void (*f)())
+**	Function for select thread for each pixel
+** **************************************************************************
+*/
+
+void			ft_thread_select(t_w *w, int i, int j, void (*f)())
+{
+	pthread_t	th_id;
+	t_pxl		pxl;
+	int			res;
+	int			i;
+
+	i = 4;
+	res = 1;
+	pxl.px = i;
+	pxl.py = j;
+	pxl.w = w;
+
+	if (!(res = pthread_create(&th_id, NULL, f, &pxl)))
+	{
+		ft_putstr_fd("Thread error", 2);
+		exit(res);
+	}
+			
+    pthread_exit(NULL);
+}
+
+/*
+** **************************************************************************
+**	void ft_thread_select(t_w *w, int i, int j, void (*f)())
+**	Function for select fractol type from user input
+** **************************************************************************
+*/
+
+void			*ft_fractol_sel(t_w *w)
+{
+	if (w->f_type == 0)
+		return(ft_mandelbrot);
+/*	if (w->f_type == 1)
+		return(ft_julia);
+	if (w->f_type == 2)
+		return(ft_koch);
+	if (w->f_type == 3)
+		return(ft_sierpinski);
+	if (w->f_type == 4)
+		return(ft_attractor);
+*/
 }
 
 

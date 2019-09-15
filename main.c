@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/11 21:22:56 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/15 17:52:00 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void		ft_init_arr_fractols(t_w *w)
 ** **************************************************************************
 */
 
-int			main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
-	t_w		new_w;
+	t_w			new_w;
 
 	if (argc != 2)
 	{
@@ -78,7 +78,7 @@ int			main(int argc, char **argv)
 	Mouse  wheel : zoom;\n");
 	}
 	
-	//int pthread_create(pthread_t *thread, const pthread_attr_t *attr,void *(*start_routine) (void *), void *arg);
+	//int pthread_create(th_id, NULL, void *(*start_routine) (void *), void *arg);
 
 	//int pthread_join(pthread_t thread, void **retval);
 
@@ -86,6 +86,7 @@ int			main(int argc, char **argv)
 
 
 	new_w.f_type = ft_atoi(argv[1]);
+	ft_putnbr(new_w.f_type);
 	ft_new_win(&new_w);
 	ft_init_arr_fractols(&new_w);
 	ft_draw(&new_w);
