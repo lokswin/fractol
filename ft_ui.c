@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/15 16:47:23 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/15 21:27:36 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void		ft_zoom(t_w *w, int *x, int *y)
 	double		offs_x;
 	double		offs_y;
 
-	offs_x = 1.5 * (*x - w->width / 2) / (0.5 * w->zm * w->width) + w->mv_x;
-	offs_y = (*y - w->height / 2) / (0.5 * w->zm * w->height) + w->mv_y;
+	offs_x = 1.5 * (*x - W_WIDTH / 2) / (0.5 * w->zm * W_WIDTH) + w->mv_x;
+	offs_y = (*y - W_HEIGHT / 2) / (0.5 * w->zm * W_HEIGHT) + w->mv_y;
 	w->mv_x = offs_x;
 	w->mv_y = offs_y;
 	w->zm *= pow(1.001, 1000);
@@ -52,7 +52,7 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 		else
 			w->zm /= pow(1.001, 1000);
 		ft_draw(w);
-		ft_putstr("%fdone!");
+		ft_putstr("%zooming done!");
 	}
 	return ((int)param);
 }
@@ -107,7 +107,7 @@ int		ft_ui_keys(int key, void *param)
 void		ft_ui(t_w *new_w)
 {
 	printf("\n-------ft_ui start-------\n");
-	new_w->win_p = mlx_new_window(new_w->mlx_p, new_w->width, new_w->height, "Fractol");
+	new_w->win_p = mlx_new_window(new_w->mlx_p, W_WIDTH, W_HEIGHT, "Fractol");
 	ft_putstr("Fractol man:\n\
 	ESC : quit Fractol\n\
 	R - change red color\n\

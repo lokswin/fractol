@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/11 21:12:27 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/15 21:24:33 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static void		ft_w_layout(t_w *w)
 {
 	printf("\n-------w_layout start-------\n");
-	w->width = 1350;
-	w->height = 1350;
+	w += 0;
 	printf("-------w_layout end-------\n");
 }
 
@@ -30,14 +29,14 @@ static void		ft_w_layout(t_w *w)
 void			ft_new_win(t_w *w)
 {
 	printf("\n-------new_win start-------\n");
-	w->max_i = 50;
+	w->max_i = 5000;
 	ft_w_layout(w);
 	if (!(w->mlx_p = mlx_init()))
 	{
 		ft_putstr_fd("mlx error", 2);
 		exit (1);
 	}
-	w->img_p = mlx_new_image(w->mlx_p, w->width, w->height);
+	w->img_p = mlx_new_image(w->mlx_p, W_WIDTH, W_HEIGHT);
 	//w->color = mlx_get_color_value(w->mlx_p, 0xFFFFFF);
 	ft_ui(w);
 	if (!w->mlx_p || !w->win_p || !w->img_p)

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 19:09:08 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/15 16:49:53 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/15 21:27:55 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			ft_draw_man(t_w *w)
 		out_str = ft_strjoin("zoom = ", ft_itoa((int)w->zm));
 		out_str = ft_strjoin(out_str, " iter = ");
 		out_str = ft_strjoin(out_str, ft_itoa((int)w->max_i));
-		mlx_string_put(w->mlx_p, w->win_p, 5, w->height - 20, 0xFFFFFF, out_str);
+		mlx_string_put(w->mlx_p, w->win_p, 5, W_HEIGHT - 20, 0xFFFFFF, out_str);
 		ft_strdel(&out_str);
 	}
 

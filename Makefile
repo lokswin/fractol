@@ -6,7 +6,7 @@
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/09/13 19:27:12 by drafe            ###   ########.fr        #
+#    Updated: 2019/09/15 18:40:46 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ OBJS = main.o\
 	ft_ui.o\
 	ft_ui_exp.o\
 	ft_colors.o\
+	ft_mandelbrot.o\
 
 all: $(NAME)
 

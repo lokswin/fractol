@@ -2,6 +2,10 @@
     "files.associations": {
         "bitset": "c",
         "__hash_table": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "__bit_reference": "c",
+        "chrono": "c",
+        "unordered_map": "c",
+        "hashtable": "c"
     }
 }
