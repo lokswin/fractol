@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/15 21:32:45 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/17 19:37:24 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void		ft_crds_scale(t_w *w, int px, int py)
 ** **************************************************************************
 */
 
-void			ft_fractol_sel(t_pxl *pxl)
+void			ft_fractol_select(t_w *w)
 {
-	if (pxl->w->f_type == 0)
-		ft_mandelbrot(pxl);
+	if (w->f_type == 0)
+		ft_mandelbrot(w);
 /*	else if (w->f_type == 1)
 		return(ft_julia);
 	else if (w->f_type == 2)
@@ -59,32 +59,35 @@ void			ft_fractol_sel(t_pxl *pxl)
 ** **************************************************************************
 */
 
-void			ft_draw(t_w *w)
+void				ft_draw(t_w *w)
 {
-	pthread_t	th_id[W_WIDTH];
-	t_pxl		pxl;
-//	int			*p;
-	int			res;
+//	pthread_t		tid;
+//	pthread_attr_t	attr;
+	int				res;
 
 	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
-	pxl.px = 0;
-	pxl.py = 0;
-	pxl.w = w;
+	w->px = 0;
 	res = 1;
-	while (pxl.px < W_WIDTH)
+	while (w->px < W_WIDTH)
 	{
-		pxl.py = 0;
-		if ((res = pthread_create(&th_id[pxl.px], NULL, ft_multi, &pxl)) || (res != 0))
+		w->py = 0;
+	/* 	if ((res = pthread_attr_init(&attr)) || (res != 0))
 		{
-			ft_putstr_fd("Thread error", 2);
+			ft_putstr_fd("pthread_attr_init error", 2);
 			exit(res);
 		}
-		//*p = (int)&th_id[pxl.px];
-		//ft_putnbr(*p);
-		pthread_join(th_id[pxl.px], NULL);
-		pxl.px++;
+		if ((res = pthread_create(&tid, &attr, ft_multi, w)) || (res != 0))
+		{
+			ft_putstr_fd("pthread_create error", 2);
+			exit(res);
+		}
+		if ((res = pthread_join(tid, NULL)) || (res != 0))
+		{
+			ft_putstr_fd("pthread_join error", 2);
+			exit(res);
+		}*/
+		w->px++;
 	}
-	
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_man(w);
 	printf("-------ft_draw end-------\n");
@@ -99,33 +102,36 @@ void			ft_draw(t_w *w)
 ** **************************************************************************
 */
 
-void			*ft_multi(void *pxl_ptr)
+void			*ft_multi(void *w_ptr)
 {
-//	pthread_t	th_id[W_HEIGHT - 1];
-	t_pxl		*pxl;
+	t_w		*w;
+	int		step;
 
 	//printf("-------ft_multi start-------\n");
-	pxl = (t_pxl*)pxl_ptr;
-	while (pxl->py < W_HEIGHT)
+	w = (t_w*)w_ptr;
+	step = W_HEIGHT / 10;
+	while (w->py < W_HEIGHT)
 	{
-		/*if ((res = pthread_create(&th_id[pxl->py], NULL, ft_fractol_sel, &pxl)) || (res != 0))
+		ft_fractol_select(w);
+		w->py++;
+		/* if()
 		{
-			ft_putstr_fd("Thread error", 2);
-			exit(res);
+			ft_fractol_select(w);
 		}
-		*p = (int)&th_id[pxl.px];
-		//ft_putnbr(*p);
-		pthread_join(th_id[pxl->py], NULL);
-		*/
-		ft_fractol_sel(pxl);
-		pxl->py++;
+		if()
+		{
+			ft_fractol_select(w);
+		}
+		if()
+		{
+
+		}*/
+		
 	}
 	//printf("-------ft_multi end-------\n");
-
+	pthread_exit(0);
 	return (NULL);
 }
-/*
-*/
 
 /*
 ** **************************************************************************

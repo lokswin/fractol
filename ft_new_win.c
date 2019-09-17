@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/15 21:24:33 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/17 19:18:39 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		ft_w_layout(t_w *w)
 void			ft_new_win(t_w *w)
 {
 	printf("\n-------new_win start-------\n");
-	w->max_i = 5000;
+	w->max_i = 1000;
 	ft_w_layout(w);
 	if (!(w->mlx_p = mlx_init()))
 	{
@@ -37,7 +37,6 @@ void			ft_new_win(t_w *w)
 		exit (1);
 	}
 	w->img_p = mlx_new_image(w->mlx_p, W_WIDTH, W_HEIGHT);
-	//w->color = mlx_get_color_value(w->mlx_p, 0xFFFFFF);
 	ft_ui(w);
 	if (!w->mlx_p || !w->win_p || !w->img_p)
 	{

@@ -6,7 +6,7 @@
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/09/15 18:40:46 by drafe            ###   ########.fr        #
+#    Updated: 2019/09/17 19:27:14 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,10 @@ OBJS = main.o\
 all: $(NAME)
 
 $(NAME):$(OBJS) | lib
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -pthread -c $<
 
 lib:
 	@make -f Makefile.libft

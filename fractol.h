@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/15 21:32:13 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/17 18:24:56 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define W_WIDTH 1350
 # define W_HEIGHT 1350
 
-//#include <time.h>
+#include <time.h>
 //# define ABS(var)((var) < 0 ? -(var) : (var))
 
 /*
@@ -39,6 +39,8 @@ typedef struct		s_w
 	int				file_l;
 	double			x_scl;
 	double			y_scl;
+	int				px;
+	int				py;
 	int				max_i;
 	int				b_clr;
 	int				g_clr;
@@ -56,25 +58,15 @@ typedef struct		s_w
 	void			*img_p;
 }					t_w;
 
-typedef struct		s_pxl
-{
-	int				px;
-	int				py;
-	int				last_i;
-	t_w				*w;
-}					t_pxl;
-
-//t_crds			*fdf_init_one_p(t_w *new_w, char *s, int y);
 void				ft_init_arr_fractols(t_w *w);
 
 void				ft_crds_scale(t_w *w, int px, int py);
 void				ft_draw(t_w *w);
-void				ft_thread_select(void *(*func)(void*), t_pxl *pxl);
-void				ft_fractol_sel(t_pxl *pxl);
+void				ft_thread_select(void *(*func)(void*), t_w *w);
+void				ft_fractol_select(t_w *w);
 void				*ft_multi(void *pxl_ptr);
 
-void				ft_mandelbrot(t_pxl *pxl);
-
+void				ft_mandelbrot(t_w *w);
 
 void				ft_img_pxl_put(t_w *w, int x, int y, int i);
 void				ft_draw_man(t_w *w);
