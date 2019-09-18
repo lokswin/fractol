@@ -6,16 +6,32 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 18:45:14 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/18 20:58:38 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		ft_w_layout(t_w *w)
+void		ft_w_layout(t_w *w)
 {
 	printf("\n-------w_layout start-------\n");
 	w += 0;
+	if (w->f_type == 0)
+	{
+		w->max_i = 50;
+		w->zm = 1;
+		w->mv_x = -0.5;
+		w->mv_y = 0;
+	}
+	if (w->f_type == 1)
+	{
+		w->max_i = 150;
+		w->zm = 1;
+		w->mv_x = 0;
+		w->mv_y = 0;
+		w->j_cRe = -0.7;
+		w->j_cIm = 0.27015;
+	}
 	printf("-------w_layout end-------\n");
 }
 
@@ -29,7 +45,6 @@ static void		ft_w_layout(t_w *w)
 void			ft_new_win(t_w *w)
 {
 	printf("\n-------new_win start-------\n");
-	w->max_i = 50;
 	ft_w_layout(w);
 	if (!(w->mlx_p = mlx_init()))
 	{

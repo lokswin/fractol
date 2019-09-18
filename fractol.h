@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/17 20:23:23 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/18 21:01:06 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ typedef struct		s_w
 	int				file_l;
 	double			x_scl;
 	double			y_scl;
+	double			j_cIm;
+	double			j_cRe;
+	int				j_iter;
 	int				last_px;
 	int				px;
-	int				py;
 	int				max_i;
 	int				b_clr;
 	int				g_clr;
@@ -64,19 +66,23 @@ void				ft_init_arr_fractols(t_w *w);
 void				ft_crds_scale(t_w *w, int px, int py);
 void				ft_draw(t_w *w);
 void				ft_thread_select(void *(*func)(void*), t_w *w);
-void				ft_fractol_select(t_w *w);
+void				ft_fractol_select(t_w *w, int x, int y);
 void				*ft_multi(void *pxl_ptr);
 
-void				ft_mandelbrot(t_w *w);
+void				ft_mandelbrot(t_w *w, int px, int py);
+void				ft_julia(t_w *w, int px, int py);
 
 void				ft_img_pxl_put(t_w *w, int x, int y, int i);
 void				ft_draw_man(t_w *w);
-int					ft_color_iter(int i, int i_max);
 
 void				ft_new_win(t_w *w);
+void				ft_w_layout(t_w *w);
+
 void				ft_ui(t_w *w);
 int					ft_ui_keys(int key, void *param);
 int					ft_ui_mouse(int key, int x, int y, void *param);
+int					ft_mouse_mv(int x, int y, void *param);
+
 
 void				ft_move_shape(t_w *w, int key);
 void				ft_change_shape(t_w *w, int key);

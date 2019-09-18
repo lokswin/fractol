@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 18:52:59 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/18 20:14:01 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void		ft_crds_scale(t_w *w, int px, int py)
 ** **************************************************************************
 */
 
-void			ft_fractol_select(t_w *w)
+void			ft_fractol_select(t_w *w, int x, int y)
 {
 	if (w->f_type == 0)
-		ft_mandelbrot(w);
-/*	else if (w->f_type == 1)
-		return(ft_julia);
-	else if (w->f_type == 2)
+		ft_mandelbrot(w, x, y);
+	else if (w->f_type == 1)
+		ft_julia(w, x, y);
+/*	else if (w->f_type == 2)
 		return(ft_koch);
 	else if (w->f_type == 3)
 		return(ft_sierpinski);
@@ -61,7 +61,7 @@ void			ft_fractol_select(t_w *w)
 
 void				ft_draw(t_w *w)
 {
-	pthread_t		tid[10];
+	pthread_t		tid[3];
 	pthread_attr_t	attr;
 	int				step;
 	int				i;
@@ -74,9 +74,9 @@ void				ft_draw(t_w *w)
 	w->px = 0;
 	res = 1;
 	i = 0;
-	step = W_WIDTH / 10;
+	step = W_WIDTH / 2;
 	w->last_px = step;
-	while (i < 9)
+	while (i < 2)
 	{
 		if ((res = pthread_attr_init(&attr)) || (res != 0))
 		{
@@ -88,23 +88,17 @@ void				ft_draw(t_w *w)
 			ft_putstr_fd("pthread_create error", 2);
 			exit(res);
 		}
-		w->px = w->last_px;
-		w->last_px += step;
-		
-	//	ft_multi(w);
-	//	w->last_px += step;
-		i++;
-	}
-	i = 0;
-	while(i < 9)
-	{
+		//printf("w->px=%d w->last_px=%d w->py=%d\n", w->px, w->last_px, w->py);
 		if ((res = pthread_join(tid[i], NULL)) || (res != 0))
 		{
 			ft_putstr_fd("pthread_join error", 2);
 			exit(res);
 		}
+		w->px = w->last_px;
+		w->last_px += step;
 		i++;
 	}
+	i = 0;
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_man(w);
 	t = clock() - t; 
@@ -125,22 +119,24 @@ void				ft_draw(t_w *w)
 void			*ft_multi(void *w_ptr)
 {
 	t_w		*w;
-	int		tmp;
+	int		tmp_x;
+	int		tmp_y;
 	
 	w = (t_w*)w_ptr;
-	tmp = w->px;
-	printf("######## ft_multi start w->px=%d w->last_px=%d w->py=%d\n", w->px, w->last_px, w->py);
-	while(tmp < w->last_px)
+	tmp_x = w->px;
+	//printf("######## ft_multi start w->px=%d w->last_px=%d w->py=%d\n", w->px, w->last_px, w->py);
+	while(tmp_x < w->last_px)
 	{
-		w->py = 0;
-		while (w->py < W_HEIGHT)
+		tmp_y = 0;
+		while (tmp_y < W_HEIGHT)
 		{
-			ft_fractol_select(w);
-			w->py++;
+			ft_fractol_select(w, tmp_x, tmp_y);
+			tmp_y++;
 		}
-		tmp++;
+		tmp_x++;
 	}
-	printf("######## ft_multi end ########\n");
+	w->px = tmp_x;
+	//printf("######## ft_multi end ########\n");
 	//pthread_exit(NULL);
 	return (NULL);
 }

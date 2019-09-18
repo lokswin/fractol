@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/13 19:40:52 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/18 20:59:40 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,48 @@ void		ft_change_color(t_w *w, int key)
 		w->b_clr += 50000;
 	ft_draw(w);
 }
+
+static void		ft_j_vary(t_w *w, int iter, int x, int y)
+{
+	w->j_iter *= iter;
+	//w->x_scl += 0.0002 * (1000 / w->zm);
+	w->j_cIm = ((W_WIDTH / 2) - x) / w->j_iter;
+	w->j_cRe = (y - (W_HEIGHT / 2)) / w->j_iter;
+}
+
+int			ft_mouse_mv(int x, int y, void *param)
+{
+	t_w		*w;
+
+	w = (t_w*)param;
+	printf("x=%d y=%d\n", x, y);
+	if (w->f_type == 11)
+	{
+		ft_j_vary(w, 1, x, y);
+		ft_draw(w);
+	}
+	return (0);
+}
+
+
 /*
-** **************************************************************************
-**	man /usr/share/man/man3/mlx.1
-**	man /usr/share/man/man3/mlx_loop.1
-**	man /usr/share/man/man3/mlx_new_image.1
-**	man /usr/share/man/man3/mlx_new_window.1
-**	man /usr/share/man/man3/mlx_pixel_put.1
-** **************************************************************************
-*/
+void			create_j(t_param *param,
+		long double mult, long double x, long double y)
+{
+	param->mult = param->mult * mult;
+	param->julia_x = ((param->start_x) - x) / param->mult;
+	param->julia_y = (y - (param->start_y)) / param->mult;
+}start_x = W_he/2
+
+void			print_j(t_param *param,
+		long double mult, long double x, long double y)
+{
+	long double		res1;
+	long double		res2;
+
+	res1 = (param->j_start_x - x) * mult;
+	res2 = (param->j_start_y - y) * mult;
+	param->j_start_x = x + res1;
+	param->j_start_y = y + res2;
+	param->j_mult = param->j_mult * mult;
+ */

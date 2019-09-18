@@ -6,43 +6,11 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 19:09:08 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/17 16:42:33 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/18 20:04:33 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-/*
-** **************************************************************************
-**	int ft_color_iter(t_w *w, int px, int py)
-**	Function to set black or white
-** **************************************************************************
-*/
-
-int				ft_color_iter(int i, int i_max)
-{
-	int			color;
-	int			red;
-	int			green;
-	int			blue;
-	double		t;
-	
-	//printf("\n-------ft_color_iter start-------\n");
-	color = 0x000000;
-	t = (double)i / (double)i_max;
-	red = (int)(9 * (1 - t) * pow(t, 3) * 255);
-	green = (int)(15 * pow((1 - t), 2) * pow(t, 2) * 255);
-	blue = (int)(8.5 * pow((1 - t), 3) * t * 255);
-	return(color);
-	if (i < i_max)
-		return(0x000000);
-	else
-		return(0xFFFFFF);
-	color = 0;
-	//(i % 256, 255, 255 * (i < i_max)));
-	//return(color);
-	//printf("\n-------ft_color_iter end-------\n");
-}
 
 /*
 ** **************************************************************************
@@ -87,13 +55,3 @@ void			ft_draw_man(t_w *w)
 	}
 
 }
-
-/*
-** **************************************************************************
-**	man /usr/share/man/man3/mlx.1
-**	man /usr/share/man/man3/mlx_loop.1
-**	man /usr/share/man/man3/mlx_new_image.1
-**	man /usr/share/man/man3/mlx_new_window.1
-**	man /usr/share/man/man3/mlx_pixel_put.1
-** **************************************************************************
-*/
