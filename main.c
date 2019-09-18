@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/17 18:39:17 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/17 20:48:59 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ void		ft_init_arr_fractols(t_w *w)
 int				main(int argc, char **argv)
 {
 	t_w			new_w;
-	clock_t		t;
-	double		time_taken;
 
-	t = clock();
 	if (argc != 2)
 	{
 		ft_putstr("usage: ./fractol [fractol number]\n\n\
@@ -89,9 +86,6 @@ int				main(int argc, char **argv)
 	ft_new_win(&new_w);
 	ft_init_arr_fractols(&new_w);
 	ft_draw(&new_w);
-	t = clock() - t; 
-    time_taken = ((double)t) / CLOCKS_PER_SEC;
-	printf("\ntime_taken = %f\n", time_taken);
 	mlx_mouse_hook(new_w.win_p, ft_ui_mouse, &new_w);
 	mlx_key_hook(new_w.win_p, ft_ui_keys, &new_w);
 	mlx_loop(new_w.mlx_p);

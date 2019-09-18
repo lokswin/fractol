@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/17 18:24:56 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/17 20:23:23 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct		s_w
 	int				file_l;
 	double			x_scl;
 	double			y_scl;
+	int				last_px;
 	int				px;
 	int				py;
 	int				max_i;

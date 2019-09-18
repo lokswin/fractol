@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/17 19:37:24 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/18 18:14:50 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,35 +61,56 @@ void			ft_fractol_select(t_w *w)
 
 void				ft_draw(t_w *w)
 {
-//	pthread_t		tid;
-//	pthread_attr_t	attr;
+	pthread_t		tid[10];
+	pthread_attr_t	attr;
+	int				step;
+	int				i;
 	int				res;
+	clock_t		t;
+	double		time_taken;
 
+	t = clock();
 	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
 	w->px = 0;
 	res = 1;
-	while (w->px < W_WIDTH)
+	i = 0;
+	step = W_WIDTH / 10;
+	w->last_px = step;
+	
+	while (i < 9)
 	{
-		w->py = 0;
-	/* 	if ((res = pthread_attr_init(&attr)) || (res != 0))
+		if ((res = pthread_attr_init(&attr)) || (res != 0))
 		{
 			ft_putstr_fd("pthread_attr_init error", 2);
 			exit(res);
 		}
-		if ((res = pthread_create(&tid, &attr, ft_multi, w)) || (res != 0))
+		if ((res = pthread_create(&tid[i], &attr, ft_multi, w)) || (res != 0))
 		{
 			ft_putstr_fd("pthread_create error", 2);
 			exit(res);
 		}
-		if ((res = pthread_join(tid, NULL)) || (res != 0))
+		w->last_px += step;
+	//	ft_multi(w);
+	//	w->last_px += step;
+		i++;
+	}
+	ft_putstr("aaaaa");
+	i = 0;
+	
+	while(i < 2)
+	{
+		if ((res = pthread_join(tid[i], NULL)) || (res != 0))
 		{
 			ft_putstr_fd("pthread_join error", 2);
 			exit(res);
-		}*/
-		w->px++;
+		}
+		i++;
 	}
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_man(w);
+	t = clock() - t; 
+    time_taken = ((double)t) / CLOCKS_PER_SEC;
+	printf("\ntime_taken = %f\n", time_taken);
 	printf("-------ft_draw end-------\n");
 }
 //if ((res = pthread_create(&th_id[count], NULL, f, &pxl)) || (res != 0))
@@ -107,14 +128,26 @@ void			*ft_multi(void *w_ptr)
 	t_w		*w;
 	int		step;
 
-	//printf("-------ft_multi start-------\n");
+	printf("######## ft_multi start ########\n");
+	step = W_HEIGHT / 4;
 	w = (t_w*)w_ptr;
-	step = W_HEIGHT / 10;
-	while (w->py < W_HEIGHT)
-	{
-		ft_fractol_select(w);
-		w->py++;
-		/* if()
+	
+		w->py = 0;
+		printf("%d,\n", w->px);
+		while (w->py < W_HEIGHT)
+		{
+			ft_fractol_select(w);
+			w->py++;
+		}
+		w->px++;
+	}
+	printf("######## ft_multi end ########\n");
+	//pthread_exit(NULL);
+	return (NULL);
+}
+
+
+/* if()
 		{
 			ft_fractol_select(w);
 		}
@@ -126,14 +159,7 @@ void			*ft_multi(void *w_ptr)
 		{
 
 		}*/
-		
-	}
-	//printf("-------ft_multi end-------\n");
-	pthread_exit(0);
-	return (NULL);
-}
-
-/*
+/*	
 ** **************************************************************************
 **	man /usr/share/man/man3/mlx.1
 **	man /usr/share/man/man3/mlx_loop.1
