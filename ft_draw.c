@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 18:14:50 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/18 18:52:59 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void				ft_draw(t_w *w)
 	i = 0;
 	step = W_WIDTH / 10;
 	w->last_px = step;
-	
 	while (i < 9)
 	{
 		if ((res = pthread_attr_init(&attr)) || (res != 0))
@@ -89,15 +88,15 @@ void				ft_draw(t_w *w)
 			ft_putstr_fd("pthread_create error", 2);
 			exit(res);
 		}
+		w->px = w->last_px;
 		w->last_px += step;
+		
 	//	ft_multi(w);
 	//	w->last_px += step;
 		i++;
 	}
-	ft_putstr("aaaaa");
 	i = 0;
-	
-	while(i < 2)
+	while(i < 9)
 	{
 		if ((res = pthread_join(tid[i], NULL)) || (res != 0))
 		{
@@ -126,39 +125,26 @@ void				ft_draw(t_w *w)
 void			*ft_multi(void *w_ptr)
 {
 	t_w		*w;
-	int		step;
-
-	printf("######## ft_multi start ########\n");
-	step = W_HEIGHT / 4;
-	w = (t_w*)w_ptr;
+	int		tmp;
 	
+	w = (t_w*)w_ptr;
+	tmp = w->px;
+	printf("######## ft_multi start w->px=%d w->last_px=%d w->py=%d\n", w->px, w->last_px, w->py);
+	while(tmp < w->last_px)
+	{
 		w->py = 0;
-		printf("%d,\n", w->px);
 		while (w->py < W_HEIGHT)
 		{
 			ft_fractol_select(w);
 			w->py++;
 		}
-		w->px++;
+		tmp++;
 	}
 	printf("######## ft_multi end ########\n");
 	//pthread_exit(NULL);
 	return (NULL);
 }
-
-
-/* if()
-		{
-			ft_fractol_select(w);
-		}
-		if()
-		{
-			ft_fractol_select(w);
-		}
-		if()
-		{
-
-		}*/
+	//printf("%d,\n", w->px);
 /*	
 ** **************************************************************************
 **	man /usr/share/man/man3/mlx.1
