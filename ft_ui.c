@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 20:39:03 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 20:05:21 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** **************************************************************************
 */
 
-static void		ft_zoom(t_w *w, int *x, int *y)
+void		ft_zoom(t_w *w, int *x, int *y)
 {
 	double		offs_x;
 	double		offs_y;
@@ -43,7 +43,7 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 	t_w		*w;
 
 	w = (t_w*)param;
-	if ((key == 5) || (key == 4))// 5 4
+	if ((key == 5) || (key == 4))
 	{
 		ft_putstr("\nZooming...");
 		if (key == 5)
@@ -63,38 +63,48 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 ** **************************************************************************
 */
 
+static void ft_ui_keys_exp(t_w *w, int key)
+{
+	if (key == MINUS_KEY)
+		w->max_i -= 50;
+	if (key == PLUS_KEY)
+		w->max_i += 50;
+	if (key == SPACE)
+	{
+		if (w->f_type == 11)
+			w->f_type = 1;
+		ft_w_layout(w);
+		ft_draw(w);
+	}
+	if (key == ESC)
+		exit(0);
+	ft_draw(w);
+}
+
+/*
+** **************************************************************************
+**	int ft_ui_keys(int key, void *param)
+**	Function to handle key input
+** **************************************************************************
+*/
+
 int		ft_ui_keys(int key, void *param)
 {
 	t_w		*w;
 
 	w = (t_w*)param;
-	if (key == PLUS_KEY)
-	{
-		w->max_i += 50;
-		ft_draw(w);
-	}
-	if (key == MINUS_KEY)
-	{
-		w->max_i -= 50;
-		ft_draw(w);
-	}
-	if (key == SPACE)
-	{
-		ft_w_layout(w);
-		ft_draw(w);
-	}
-	if (key == A_KEY)
+	if ((key == PLUS_KEY) || (key == MINUS_KEY) || (key == SPACE) || (key == ESC))
+		ft_ui_keys_exp(w, key);
+	if ((key == A_KEY) && (w->f_type == 1))
 		w->f_type = 11;
-	if (key == S_KEY)
+	if ((key == S_KEY) && (w->f_type == 11))
 		w->f_type = 1;
-	if ((key == R_KEY) || (key == G_KEY) || (key == B_KEY))
+	if ((key == R_KEY) || (key == G_KEY) || (key == B_KEY) || (key == C_KEY))
 		ft_change_color(w, key);
 	if ((key == ARROW_U) || (key == ARROW_D) || (key == ARROW_R) || (key == ARROW_L))
 		ft_move_shape(w, key);
-	//if ((key == NUM_2) || (key == NUM_4) || (key == NUM_6) || (key == NUM_8))
-	//	ft_change_shape(w, key);
-	if (key == ESC)
-		exit(0);
+	if ((key == NUM_2) || (key == NUM_4) || (key == NUM_6) || (key == NUM_8))
+		ft_change_shape(w, key);
 	return ((int)param);
 }
 

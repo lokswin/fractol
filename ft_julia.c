@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 20:49:01 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 19:51:03 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void		ft_julia(t_w *w, int px, int py)
 	{
 		re = x;
 		im = y;
-		x = (re * re) - (im * im) + w->j_cRe;
- 		y = (2 * re * im) + w->j_cIm;
+		x = (re * re) - (im * im) + w->j_cre;
+ 		y = (2 * re * im) + w->j_cim;
 		i++;
 	}
 	ft_img_pxl_put(w, px, py, i);

@@ -6,6 +6,8 @@
         "__bit_reference": "c",
         "chrono": "c",
         "unordered_map": "c",
-        "hashtable": "c"
+        "hashtable": "c",
+        "complex": "c",
+        "cmath": "c"
     }
 }

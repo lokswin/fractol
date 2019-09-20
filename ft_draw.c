@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 20:14:01 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 19:54:07 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			ft_fractol_select(t_w *w, int x, int y)
 {
 	if (w->f_type == 0)
 		ft_mandelbrot(w, x, y);
-	else if (w->f_type == 1)
+	else if ((w->f_type == 1 )|| (w->f_type == 11))
 		ft_julia(w, x, y);
 /*	else if (w->f_type == 2)
 		return(ft_koch);
@@ -88,7 +88,6 @@ void				ft_draw(t_w *w)
 			ft_putstr_fd("pthread_create error", 2);
 			exit(res);
 		}
-		//printf("w->px=%d w->last_px=%d w->py=%d\n", w->px, w->last_px, w->py);
 		if ((res = pthread_join(tid[i], NULL)) || (res != 0))
 		{
 			ft_putstr_fd("pthread_join error", 2);
@@ -106,9 +105,7 @@ void				ft_draw(t_w *w)
 	printf("\ntime_taken = %f\n", time_taken);
 	printf("-------ft_draw end-------\n");
 }
-//if ((res = pthread_create(&th_id[count], NULL, f, &pxl)) || (res != 0))
-//ft_putstr_fd("Thread error", 2);
-				//	exit(res);
+
 /*
 ** **************************************************************************
 **	void ft_thread_select(t_w *w, int i, int j, void (*f)())
@@ -137,10 +134,9 @@ void			*ft_multi(void *w_ptr)
 	}
 	w->px = tmp_x;
 	//printf("######## ft_multi end ########\n");
-	//pthread_exit(NULL);
 	return (NULL);
 }
-	//printf("%d,\n", w->px);
+
 /*	
 ** **************************************************************************
 **	man /usr/share/man/man3/mlx.1

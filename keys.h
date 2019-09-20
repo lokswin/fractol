@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/13 19:41:18 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 18:08:45 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@
 # define ARROW_R 124
 # define ARROW_L 123
 
-# define NUM_8 126
-# define NUM_2 125
-# define NUM_4 124
-# define NUM_6 123
+# define NUM_8 91
+# define NUM_2 84
+# define NUM_4 86
+# define NUM_6 88
 
 # define SPACE 49
 

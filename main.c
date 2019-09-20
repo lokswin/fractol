@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 20:57:57 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 19:48:42 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ void		ft_init_arr_fractols(t_w *w)
 	fractols[0][0] = 1;
 	fractols[0][1] = -0.5;
 	fractols[0][2] = 0;
-	w->b_clr = 0;
-	w->g_clr = 0;
-	w->r_clr = 0;
 	while (i < 3)
 	{
 		j = 0;
@@ -76,9 +73,9 @@ int				main(int argc, char **argv)
 	ft_new_win(&new_w);
 	ft_init_arr_fractols(&new_w);
 	ft_draw(&new_w);
+	mlx_hook(new_w.win_p, 6, 32, ft_mouse_mv, (void*)(&new_w));
 	mlx_mouse_hook(new_w.win_p, ft_ui_mouse, (void*)&new_w);
 	mlx_key_hook(new_w.win_p, ft_ui_keys, (void*)&new_w);
-	mlx_hook(new_w.win_p, 6, (1L << 6), ft_mouse_mv, (void*)(&new_w));
 	mlx_loop(new_w.mlx_p);
 	exit(0);
 }

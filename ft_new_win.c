@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/18 20:58:38 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 19:21:17 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,20 @@
 void		ft_w_layout(t_w *w)
 {
 	printf("\n-------w_layout start-------\n");
-	w += 0;
+	w->lsd = 0;
+	w->b_clr = 0XFFFFFF;
+	w->g_clr = 0XFFFFFF;
+	w->r_clr = 0XFFFFFF;
+	w->max_i = 50;
+	w->zm = 1;
+	w->mv_y = 0;
 	if (w->f_type == 0)
-	{
-		w->max_i = 50;
-		w->zm = 1;
 		w->mv_x = -0.5;
-		w->mv_y = 0;
-	}
 	if (w->f_type == 1)
 	{
-		w->max_i = 150;
-		w->zm = 1;
 		w->mv_x = 0;
-		w->mv_y = 0;
-		w->j_cRe = -0.7;
-		w->j_cIm = 0.27015;
+		w->j_cre = -0.7;
+		w->j_cim = 0.27015;
 	}
 	printf("-------w_layout end-------\n");
 }
