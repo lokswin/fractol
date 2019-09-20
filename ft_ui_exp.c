@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 20:09:26 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 21:15:12 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,35 +84,45 @@ void		ft_change_color(t_w *w, int key)
 
 static void		ft_j_vary(t_w *w, int *x, int *y)
 {
-	double		offs_w;
-	double		offs_h;
+//	double		offs_w;
+//	double		offs_h;
 	double		offs_x;
 	double		offs_y;
 
 	printf("\n-------ft_j_vary start-------\n");
-
-	offs_w = 1.5 * (W_WIDTH - W_WIDTH / 2) / (0.5 * w->zm * W_WIDTH) + w->mv_x;
-	offs_h = (W_HEIGHT - W_HEIGHT / 2) / (0.5 * w->zm * W_HEIGHT) + w->mv_y;
+	w->m_x = 1.5 * (w->m_x - W_WIDTH / 2) / (0.5 * w->zm * W_WIDTH) + w->mv_x;
+	w->m_y = (w->m_y - W_HEIGHT / 2) / (0.5 * w->zm * W_HEIGHT) + w->mv_y;
+	//offs_x = ((W_HEIGHT / 2) - *x);
+	//offs_y = (*y - (W_WIDTH / 2));
 	offs_x = 1.5 * (*x - W_WIDTH / 2) / (0.5 * w->zm * W_WIDTH) + w->mv_x;
 	offs_y = (*y - W_HEIGHT / 2) / (0.5 * w->zm * W_HEIGHT) + w->mv_y;
-	offs_x = offs_w - offs_x;
-	offs_y = offs_h - offs_y;
+	offs_x = w->m_x - offs_x;
+	offs_y = w->m_y - offs_y;
 	printf("offs_x=%f offs_y=%f\n", offs_x, offs_y);
-	//w->j_cre = offs_x * (0.0002 * (1000 / w->zm));
-	//w->j_cim = offs_y * (0.0002 * (1000 / w->zm));
-	/*
-	if (offs_x > NUM_6)
-		w->j_cre += 0.0002 * (1000 / w->zm);
-	if (key == NUM_4)
-		w->j_cre -= 0.0002 * (1000 / w->zm);
-	if (key == NUM_2)
-		w->j_cim += 0.0002 * (1000 / w->zm);
-	if (key == NUM_8)
-		w->j_cim -= 0.0002 * (1000 / w->zm);*/
+	//w->j_cre -= offs_x * (0.0002 * (10 / w->zm));
+	//w->j_cim -= offs_y * (0.0002 * (10 / w->zm));
+	w->j_cre += offs_x * (0.0002 / w->zm);
+	w->j_cim += offs_y * (0.0002 / w->zm);
+	//w->j_cre -= offs_x * (0.0002 / w->zm);
+	//w->j_cim -= offs_y * (0.0002 / w->zm);
+	/*if (offs_x > 0)
+		w->j_cre += offs_x * (0.0002 * (100 / w->zm));
+	if (offs_x < 0)
+		w->j_cre += offs_x * (0.0002 * (100 / w->zm));
+	if (offs_y > 0)
+		w->j_cim += offs_y * (0.0002 * (100 / w->zm));
+	if (offs_y < 0)
+		w->j_cim -= offs_y * (0.0002 * (100 / w->zm));
+		*/
 	//w->j_cre += (offs_h - offs_y) * (0.0002 * (1000 / w->zm));
 	//w->j_cim += (offs_h - offs_y) * (0.0002 * (1000 / w->zm));
 	//w->j_cim += offs_y * (0.0002 * (1000 / w->zm));
 	//w->j_cre += offs_x * (0.0002 * (1000 / w->zm));
+	/*offs_w = 1.5 * (W_WIDTH - W_WIDTH / 2) / (0.5 * w->zm * W_WIDTH) + w->mv_x;
+	offs_h = (W_HEIGHT - W_HEIGHT / 2) / (0.5 * w->zm * W_HEIGHT) + w->mv_y;
+
+	offs_x = 1.5 * (*x - W_WIDTH / 2) / (0.5 * w->zm * W_WIDTH) + w->mv_x;
+	offs_y = (*y - W_HEIGHT / 2) / (0.5 * w->zm * W_HEIGHT) + w->mv_y;*/
 	printf("\n-------ft_j_vary end-------\n");
 	
 }

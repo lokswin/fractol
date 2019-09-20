@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 20:05:21 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 20:51:52 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 	t_w		*w;
 
 	w = (t_w*)param;
+	if (w->f_type == 1)
+	{
+		w->m_x = x;
+		w->m_y = y;
+	}
 	if ((key == 5) || (key == 4))
 	{
 		ft_putstr("\nZooming...");

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 19:47:08 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/20 20:50:29 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct		s_w
 	double			y_scl;
 	double			j_cim;
 	double			j_cre;
+	int				m_x;
+	int				m_y;
 	int				last_px;
 	int				px;
 	int				max_i;
