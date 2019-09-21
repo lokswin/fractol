@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 20:50:29 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 20:01:23 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 typedef struct		s_w
 {
 	char			*img;
+	int				w_threads;
+	int				flow;
 	int				file_w;
 	int				file_h;
 	int				file_l;
@@ -70,6 +72,7 @@ void				ft_draw(t_w *w);
 void				ft_thread_select(void *(*func)(void*), t_w *w);
 void				ft_fractol_select(t_w *w, int x, int y);
 void				*ft_multi(void *pxl_ptr);
+void				*ft_multi2(void *pxl_ptr);
 
 void				ft_mandelbrot(t_w *w, int px, int py);
 void				ft_julia(t_w *w, int px, int py);

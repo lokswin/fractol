@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 18:08:45 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 18:13:47 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define E_KEY 14
 # define R_KEY 15
 # define T_KEY 17
+# define I_KEY 34
 # define O_KEY 31
 # define P_KEY 35
 

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 19:21:17 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 19:00:16 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void		ft_w_layout(t_w *w)
 	w->b_clr = 0XFFFFFF;
 	w->g_clr = 0XFFFFFF;
 	w->r_clr = 0XFFFFFF;
-	w->max_i = 50;
+	w->max_i = 1000;
 	w->zm = 1;
 	w->mv_y = 0;
+	w->w_threads = 4;
 	if (w->f_type == 0)
 		w->mv_x = -0.5;
 	if (w->f_type == 1)

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 20:51:52 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 18:51:14 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ static void ft_ui_keys_exp(t_w *w, int key)
 		if (w->f_type == 11)
 			w->f_type = 1;
 		ft_w_layout(w);
-		ft_draw(w);
 	}
-	if (key == ESC)
-		exit(0);
+	if ((key == P_KEY) && ((w->w_threads + 1) < 16))
+		w->w_threads += 1;
+	if ((key == I_KEY) && ((w->w_threads - 1) > 1))
+		w->w_threads -= 1;
 	ft_draw(w);
 }
 
@@ -98,7 +99,10 @@ int		ft_ui_keys(int key, void *param)
 	t_w		*w;
 
 	w = (t_w*)param;
-	if ((key == PLUS_KEY) || (key == MINUS_KEY) || (key == SPACE) || (key == ESC))
+	if (key == ESC)
+		exit(0);
+	if ((key == PLUS_KEY) || (key == MINUS_KEY) || (key == SPACE) || \
+	(key == ESC) || (key == P_KEY) || (key == I_KEY) || (key == O_KEY))
 		ft_ui_keys_exp(w, key);
 	if ((key == A_KEY) && (w->f_type == 1))
 		w->f_type = 11;
@@ -110,6 +114,7 @@ int		ft_ui_keys(int key, void *param)
 		ft_move_shape(w, key);
 	if ((key == NUM_2) || (key == NUM_4) || (key == NUM_6) || (key == NUM_8))
 		ft_change_shape(w, key);
+	
 	return ((int)param);
 }
 
