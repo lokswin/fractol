@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/21 20:01:23 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 21:22:07 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 typedef struct		s_w
 {
 	char			*img;
-	int				w_threads;
+	int				threads;
 	int				flow;
 	int				file_w;
 	int				file_h;
@@ -47,6 +47,7 @@ typedef struct		s_w
 	int				m_y;
 	int				last_px;
 	int				px;
+	int				py;
 	int				max_i;
 	int				b_clr;
 	int				g_clr;

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 19:09:08 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/21 18:22:23 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 21:28:23 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			ft_draw_man(t_w *w)
 		out_str = ft_strjoin(out_str, "iter = ");
 		out_str = ft_strjoin(out_str, ft_itoa((int)w->max_i));
 		out_str = ft_strjoin(out_str, " threads = ");
-		out_str = ft_strjoin(out_str, ft_itoa((int)w->w_threads));
+		out_str = ft_strjoin(out_str, ft_itoa((int)w->threads));
 		mlx_string_put(w->mlx_p, w->win_p, 5, W_HEIGHT - 20, 0x000000, out_str);
 		ft_strdel(&out_str);
 	}
