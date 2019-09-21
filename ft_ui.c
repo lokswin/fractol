@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/21 18:51:14 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 20:32:47 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,10 @@ void		ft_ui(t_w *new_w)
 	ft_putstr("Fractol man:\n\
 	ESC : quit Fractol\n\
 	R - change red color\n\
-	G - change greeb color\n\
+	G - change green color\n\
 	B - change blue color\n\
-	SPACE - default set\n\
+	C - rainbow\n\
+	SPACE - default\n\
 	NUM(+) - add 50 iterations\n\
 	NUM(-) - remove 50 iterations\n\
 	");

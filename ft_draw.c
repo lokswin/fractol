@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/21 20:05:21 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/21 21:15:18 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void			ft_fractol_select(t_w *w, int x, int y)
 
 void				ft_draw(t_w *w)
 {
-	pthread_t		tid[w->w_threads + 1];
+	pthread_t		tid[w->w_threads*2 + 1];
 	pthread_attr_t	attr;
 	int				step;
 	int				i;
@@ -75,15 +75,20 @@ void				ft_draw(t_w *w)
 	res = 1;
 	i = 0;
 	w->flow = 0;
-	step = W_WIDTH / (w->w_threads * 2);
-	while (w->flow < w->w_threads)
+	step = W_WIDTH / (w->w_threads);
+	w->last_px = step;
+	while (w->flow < w->w_threads * 2)
 	{
-		w->last_px = step * (w->flow + 1);
-		w->px = step * w->flow;
+		//w->last_px = step * (w->flow + 1);
+		//w->px = step * w->flow;
 		//printf("i=%d w->px=%d w->last_px=%d \n", i, w->px, w->last_px);
-		ft_multi2((void*)w);
+		//if ((printf("1") || !ft_multi((void*)w)))
+		// 	;
 		//if ((w->last_px = step * (i + 1)) && ft_multi2((void*)w))
 		//	;
+		//w->flow++;
+		printf("f=%d\n", w->flow);
+		ft_multi2((void*)w);
 		if ((res = pthread_attr_init(&attr)) || (res != 0))
 		{
 			ft_putstr_fd("pthread_attr_init error", 2);
@@ -94,20 +99,28 @@ void				ft_draw(t_w *w)
 			ft_putstr_fd("pthread_create error", 2);
 			exit(res);
 		}
-		//w->px = w->last_px;
-		//w->last_px += step;
-		//w->px = w->last_px;
-		//w->last_px += step;
-		w->flow++;
-	}
-	w->flow = 0;
-	while (w->flow < w->w_threads)
-	{
-		if ((res = pthread_join(tid[w->flow], NULL)) || (res != 0))
+/*		if ((res = pthread_join(tid[w->flow], NULL)) || (res != 0))
 		{
 			ft_putstr_fd("pthread_join error", 2);
 			exit(res);
 		}
+		ft_multi((void*)w);
+		printf("f=%d\n", w->flow);
+		//w->px = w->last_px;
+		//w->last_px += step;
+		//w->px = w->last_px;
+		//w->last_px += step;
+		*/
+	}
+	w->flow = 0;
+	while (w->flow < w->w_threads * 2)
+	{
+		pthread_join(tid[w->flow], NULL);
+		/* if ((res = pthread_join(tid[w->flow], NULL)) || (res != 0))
+		{
+			ft_putstr_fd("pthread_join error", 2);
+			exit(res);
+		}*/
 		w->flow++;
 	}
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
@@ -136,9 +149,10 @@ void			*ft_multi(void *w_ptr)
 	step = W_WIDTH / (w->w_threads * 2);//(w->w_threads * 2);
 	w->last_px = step * (w->flow + 1);
 	w->px = step * w->flow;
+	w->flow++;
 	tmp_x = w->px;
-	//printf("######## ft_multi start w->px=%d w->last_px=%d \n", tmp_x, w->last_px);
-	while(tmp_x < (w->px + step))
+	printf("######## ft_multi start w->px=%d w->last_px=%d \n", tmp_x, w->last_px);
+	while((tmp_x < w->last_px) && (tmp_x < W_WIDTH))
 	{
 		tmp_y = 0;
 		while (tmp_y < W_HEIGHT)
@@ -149,7 +163,37 @@ void			*ft_multi(void *w_ptr)
 		tmp_x++;
 	}
 	
-	//printf("######## ft_multi end ########\n");
+	printf("######## ft_multi end ########\n");
+	return (NULL);
+}
+
+
+void			*ft_multi(void *w_ptr)
+{
+	t_w		*w;
+	int		tmp_x;
+	int		tmp_y;
+	int		step;
+	
+	w = (t_w*)w_ptr;
+	step = W_WIDTH / (w->w_threads * 2);//(w->w_threads * 2);
+	w->last_px = step * (w->flow + 1);
+	w->px = step * w->flow;
+	w->flow++;
+	tmp_x = w->px;
+	printf("######## ft_multi start w->px=%d w->last_px=%d \n", tmp_x, w->last_px);
+	while((tmp_x < w->last_px) && (tmp_x < W_WIDTH))
+	{
+		tmp_y = 0;
+		while (tmp_y < W_HEIGHT)
+		{
+			ft_fractol_select(w, tmp_x, tmp_y);
+			tmp_y++;
+		}
+		tmp_x++;
+	}
+	
+	printf("######## ft_multi end ########\n");
 	return (NULL);
 }
 
@@ -162,10 +206,12 @@ void			*ft_multi2(void *w_ptr)
 	
 	w = (t_w*)w_ptr;
 	step = W_WIDTH / (w->w_threads * 2);//(w->w_threads * 2);
-	
+	w->last_px = step * (w->flow + 1);
+	w->px = step * w->flow;
+	w->flow++;
 	tmp_x = w->px;
-	//printf("######## ft_multi2 start w->px=%d w->last_px=%d \n", tmp_x, w->last_px);
-	while(tmp_x < (w->px + step))
+	printf("######## ft_multi2 start w->px=%d w->last_px=%d \n", tmp_x, w->last_px);
+	while((tmp_x < w->last_px) && (tmp_x < W_WIDTH))
 	{
 		tmp_y = 0;
 		while (tmp_y < W_HEIGHT)
@@ -176,7 +222,7 @@ void			*ft_multi2(void *w_ptr)
 		tmp_x++;
 	}
 	
-	//printf("######## ft_multi2 end ########\n");
+	printf("######## ft_multi2 end ########\n");
 	return (NULL);
 }
 
