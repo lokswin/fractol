@@ -6,11 +6,22 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/20 19:48:42 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/23 21:23:34 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+static void		ft_putman(void)
+{
+	ft_putstr("usage: ./fractol [fractol number]\n\n\
+	0 - Mandelbrot set;\n\
+	1 - Julia set;\n\
+	2 - Koch snowflake;\n\
+	3 - Sierpinski carpet;\n\
+	4 - Attractor;\n\
+	\n");
+}
 
 /*
 ** **************************************************************************
@@ -56,20 +67,16 @@ int				main(int argc, char **argv)
 {
 	t_w			new_w;
 
-	new_w.f_type = ft_atoi(argv[1]);
-	if ((argc != 2) || (new_w.f_type > 4))
+	if ((argc != 2))
 	{
-		ft_putstr("usage: ./fractol [fractol number]\n\n\
-0 - Mandelbrot set;\n\
-1 - Julia set;\n\
-2 - Koch snowflake;\n\
-3 - Sierpinski carpet;\n\
-4 - Attractor;\n\
-		\n");
+		ft_putman();
 		exit(1);
 	}
-
-	
+	if ((new_w.f_type = ft_atoi(argv[1])) > 4)
+	{
+		ft_putman();
+		exit(1);
+	}
 	ft_new_win(&new_w);
 	ft_init_arr_fractols(&new_w);
 	ft_draw(&new_w);

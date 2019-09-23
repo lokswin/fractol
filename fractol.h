@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/21 21:22:07 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/23 21:47:47 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <pthread.h>
-# define W_WIDTH 1350
-# define W_HEIGHT 1350
+# define W_WIDTH 1348
+# define W_HEIGHT 1348
 
 #include <time.h>
 //# define ABS(var)((var) < 0 ? -(var) : (var))
@@ -36,6 +36,7 @@ typedef struct		s_w
 	char			*img;
 	int				threads;
 	int				flow;
+	int				stop;
 	int				file_w;
 	int				file_h;
 	int				file_l;
@@ -69,7 +70,7 @@ typedef struct		s_w
 void				ft_init_arr_fractols(t_w *w);
 
 void				ft_crds_scale(t_w *w, int px, int py);
-void				ft_draw(t_w *w);
+int					ft_draw(t_w *w);
 void				ft_thread_select(void *(*func)(void*), t_w *w);
 void				ft_fractol_select(t_w *w, int x, int y);
 void				*ft_multi(void *pxl_ptr);

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/21 22:15:39 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/23 21:58:24 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,43 @@ void			ft_fractol_select(t_w *w, int x, int y)
 
 /*
 ** **************************************************************************
+**	static void ft_thread_run(t_w *w)
+**	Function for run on thread
+** **************************************************************************
+*/
+
+static void		ft_thread_run(t_w *w)
+{
+	pthread_t		tid[w->threads + 1];
+	pthread_attr_t	attr;
+	int				res;
+
+	if ((res = pthread_attr_init(&attr)) || (res != 0))
+	{
+		ft_putstr_fd("pthread_attr_init error", 2);
+		exit(res);
+	}
+	if ((res = pthread_create(&tid[w->flow], &attr, ft_multi, (void*)w)) || (res != 0))
+	{
+		ft_putstr_fd("pthread_create error", 2);
+		exit(res);
+	}
+	if ((res = pthread_join(tid[w->flow], NULL)) || (res != 0))
+	{
+		ft_putstr_fd("pthread_join error", 2);
+		exit(res);
+	}
+}
+
+/*
+** **************************************************************************
 **	void ft_draw(t_w *w)
 **	Function for pixel iteration
 ** **************************************************************************
 */
 
-void				ft_draw(t_w *w)
+int				ft_draw(t_w *w)
 {
-	pthread_t		tid[w->threads + 1];
-	pthread_attr_t	attr;
-	int				res;
 	clock_t		t;
 	double		time_taken;
 
@@ -71,34 +98,29 @@ void				ft_draw(t_w *w)
 	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
 	w->px = 0;
 	w->last_px = 0;
-	res = 1;
 	while (w->px < W_WIDTH)
 	{
 		w->py = 0;
 		w->flow = 0;
 		while (w->flow < w->threads)
 		{
-			ft_multi((void*)w);
-			if ((res = pthread_attr_init(&attr)) || (res != 0))
-			{
-				ft_putstr_fd("pthread_attr_init error", 2);
-				exit(res);
-			}
-			if ((res = pthread_create(&tid[w->flow], &attr, ft_multi, (void*)w)) || (res != 0))
-			{
-				ft_putstr_fd("pthread_create error", 2);
-				exit(res);
-			}
-			pthread_join(tid[w->flow], NULL);
+			ft_thread_run(w);
+			//ft_multi((void*)w);
 		}
+		//while (w->flow < w->threads)
+		//{
+			//ft_thread_run(w);
+			//ft_multi2((void*)w);
+		//}
 		w->px++;
 	}
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_man(w);
-	t = clock() - t; 
+	t = clock() - t;
     time_taken = ((double)t) / CLOCKS_PER_SEC;
 	printf("\ntime_taken = %f\n", time_taken);
 	printf("-------ft_draw end-------\n");
+	return (1);
 }
 
 /*
@@ -116,13 +138,14 @@ void			*ft_multi(void *w_ptr)
 	int		step;
 	
 	w = (t_w*)w_ptr;
-	tmp_x = 0;//w->px;
-	tmp_y = w->py;
-	step = W_HEIGHT / w->threads * 2;
+	tmp_x = 0;
+	
+	step = W_HEIGHT / w->threads;
 	w->last_px = step * (w->flow + 1);
 	w->py = step * w->flow;
+	tmp_y = w->py;
 	w->flow++;
-	printf("######## ft_multi start w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", w->px, tmp_y, w->last_px, w->flow);
+	//printf("######## ft_multi start w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", w->px, tmp_y, w->last_px, w->flow);
 	while (tmp_y < w->last_px)
 	{
 		ft_fractol_select(w, w->px, tmp_y);
@@ -132,6 +155,30 @@ void			*ft_multi(void *w_ptr)
 	return (NULL);
 }
 
+void			*ft_multi2(void *w_ptr)
+{
+	t_w		*w;
+	int		tmp_x;
+	int		tmp_y;
+	int		step;
+	
+	w = (t_w*)w_ptr;
+	tmp_x = 0;
+	
+	step = W_HEIGHT / w->threads;
+	w->last_px = step * (w->flow + 1);
+	w->py = step * w->flow;
+	tmp_y = w->py;
+	w->flow++;
+	printf("######## ft_multi2 start w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", w->px, tmp_y, w->last_px, w->flow);
+	while (tmp_y < w->last_px)
+	{
+		ft_fractol_select(w, w->px, tmp_y);
+		tmp_y++;
+	}
+	//printf("######## ft_multi end ########\n");
+	return (NULL);
+}
 /*	
 ** **************************************************************************
 **	man /usr/share/man/man3/mlx.1
