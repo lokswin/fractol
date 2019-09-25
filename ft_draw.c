@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/25 22:04:46 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/25 22:15:35 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,19 @@ static pthread_t		*ft_thread_run(t_w *w)
 	{
 		p[i].pflow = i;
 		p[i].w = w;
-		ft_fractol_select(&p[i]);
+		//
+		pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]);
 		i++;
 		p[i].pflow = i;
 		p[i].w = w;
-		pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]);
-		pthread_join(tid[i], NULL);
-		/*if ((res = pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i])) || (res != 0))
-		{
-			ft_putstr_fd("pthread_create error", 2);
-			exit(res);
-		} */
+		ft_fractol_select((void*)&p[i]);
+		pthread_join(tid[i-1], NULL);
 		i++;
 	}
 	i = 0;
 	while (i < w->threads)
 	{
+		
 		//pthread_join(tid[i], NULL);
 	 	/*if ((res = pthread_join(tid[i], NULL)) || (res != 0))
 		{
