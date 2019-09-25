@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/25 20:41:45 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/25 21:31:54 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ typedef struct		s_w
 	void			*win_p;
 	void			*img_p;
 }					t_w;
+
+typedef struct		s_param
+{
+	int				pflow;
+	t_w				*w;
+}					t_param;
 
 void				ft_init_arr_fractols(t_w *w);
 
