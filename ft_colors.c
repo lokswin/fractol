@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 19:09:08 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/23 21:45:01 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/25 21:03:54 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			ft_img_pxl_put(t_w *w, int x, int y, int i)
 	int			j;
 	double		t;
 	int			tmp1;
+	int			col;
 
 	//printf("\n-------ft_img_pxl_put start-------\n");
 	t = (double)i / (double)w->max_i;
@@ -36,11 +37,15 @@ void			ft_img_pxl_put(t_w *w, int x, int y, int i)
 		w->img[++j] = (int)((w->r_clr + 8.5) * pow((1 - t), 3) * t * 255) >> 16;//Red
 		w->img[++j] = 0;
 	}
-	else
+	else 
 	{
-		w->img[j] = (int)(w->b_clr * t);
-		w->img[++j] = (int)(w->g_clr * t);
-		w->img[++j] = (int)(w->r_clr * t);
+		if (i < w->max_i)
+			col = 0XFFFFFF;
+		else
+			col = 0X000000;
+		w->img[j] = col;
+		w->img[++j] = col >> 8;
+		w->img[++j] = col >> 16;
 		w->img[++j] = 0;
 	}
 	//printf("\n-------ft_img_pxl_put end-------\n");
