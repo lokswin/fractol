@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/25 22:15:35 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/27 22:01:42 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,39 +39,40 @@ void		ft_crds_scale(t_w *w, int px, int py)
 void			*ft_fractol_select(void *w_ptr)
 {
 	t_param		*p;
-	int			tmp_x;
-	int			tmp_y;
 
+	//printf("######## ft_fractol_select\n");
 	p = (t_param*)w_ptr;
-	//printf("######## ft_fractol_select w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", p->w->px, p->w->py, p->w->last_px, p->pflow);
-	tmp_x = p->pflow;
-	while (tmp_x < W_WIDTH)
+	pthread_mutex_lock(&p->w->lock_x);
+	p->w->px = p->pflow;
+	while (p->w->px < W_WIDTH)
 	{
-		tmp_y = 0;
-		while (tmp_y < W_HEIGHT)
+		p->w->py = 0;
+		while (p->w->py < W_HEIGHT)
 		{
 			if (p->w->f_type == 0)
-				ft_mand(p->w, tmp_x, tmp_y);
-			else if ((p->w->f_type == 1 ) || (p->w->f_type == 11))
-				ft_julia(p->w, tmp_x, tmp_y);
-			tmp_y += 1;
+				ft_mand(p->w, p->w->px, p->w->py);
+			else if ((p->w->f_type == 1) || (p->w->f_type == 11))
+				ft_julia(p->w, p->w->px, p->w->py);
+			p->w->py++;
 		}
-		tmp_x += p->w->threads;
+		p->w->px += p->w->threads;
 	}
+	//printf("######## ft_fractol_select w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", p->w->px, p->w->py, p->w->last_px, p->pflow);
 	//printf("######## ft_fractol_select end ########\n");
+	pthread_mutex_unlock(&p->w->lock_x);
 	return (NULL);
 }
-/*			if (w->f_type == 0)
-				ft_mandelbrot(w, w->px, w->py);
-			else if ((w->f_type == 1 ) || (w->f_type == 11))
-				ft_julia(w, w->px, w->py);
-	else if (w->f_type == 2)
-		return(ft_koch);
-	else if (w->f_type == 3)
-		return(ft_sierpinski);
-	else if (w->f_type == 4)
-		return(ft_attractor);
-*/
+/*	x = thread_param->pixel_start;
+	while (x < WINDOW_WIDTH)
+	{
+		y = 0;
+		while (y < WINDOW_HEIGTH)
+		{
+			check_pixel(param, x, y);
+			y += 1;
+		}
+		x += THREADS_NUM;
+	} */
 /*
 ** **************************************************************************
 **	static void ft_thread_run(t_w *w)
@@ -81,44 +82,34 @@ void			*ft_fractol_select(void *w_ptr)
 
 static pthread_t		*ft_thread_run(t_w *w)
 {
+	
+	
 	pthread_t			tid[w->threads];
-	t_param				p[w->threads];
 	pthread_t			*ptr;
+	t_param				p[w->threads];
 	int					i;
-	int					step;
 	int					res;
 
-	//printf("######## ft_thread_run start ########%d\n", w->py);
+	//printf("######## ft_thread_run start ########\n");
 	i = 0;
 	res = 0;
-	w->px = 0;
-	w->py = 0;
-	w->last_px = 0;
-	w->flow = 0;
-	step = W_WIDTH / (w->threads);
+	pthread_mutex_init(&w->lock_x, NULL);
 	while (i < w->threads)
 	{
 		p[i].pflow = i;
 		p[i].w = w;
-		//
 		pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]);
-		i++;
+		//ft_fractol_select((void*)&p[i]);
+		/* i++;
 		p[i].pflow = i;
 		p[i].w = w;
-		ft_fractol_select((void*)&p[i]);
-		pthread_join(tid[i-1], NULL);
+		ft_fractol_select((void*)&p[i]);*/
 		i++;
 	}
 	i = 0;
 	while (i < w->threads)
 	{
-		
-		//pthread_join(tid[i], NULL);
-	 	/*if ((res = pthread_join(tid[i], NULL)) || (res != 0))
-		{
-			ft_putstr_fd("pthread_join error", 2);
-			exit(res);
-		}*/
+		pthread_join(tid[i], NULL);
 		i++;
 	}
 	ptr = tid;
@@ -153,17 +144,19 @@ static pthread_t		*ft_thread_run(t_w *w)
 
 int					ft_draw(t_w *w)
 {
-	pthread_t		*tid;
-//	pthread_attr_t	attr;
-//	int				res;
+	pthread_t		*tid2;
 	int				i;
 	clock_t			t;
 	double			time_taken;
+	
 	i = 0;
-
 	t = clock();
+	w->px = 0;
+	w->py = 0;
+	w->last_px = 0;
+	w->flow = 1;
 	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
-	tid = ft_thread_run(w);
+	ft_thread_run(w);
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_man(w);
 	t = clock() - t;
@@ -171,7 +164,7 @@ int					ft_draw(t_w *w)
 	printf("\ntime_taken = %f\n", time_taken);
 	printf("-------ft_draw end-------\n");
 	return (1);
-	tid = ft_thread_run(w);
+	tid2 = ft_thread_run(w);
 }
 
 /*

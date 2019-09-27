@@ -6,13 +6,13 @@
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/09/25 20:43:38 by drafe            ###   ########.fr        #
+#    Updated: 2019/09/27 21:07:55 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = fractol
 
@@ -29,12 +29,12 @@ OBJS = main.o\
 	ft_ui_exp.o\
 	ft_colors.o\
 	ft_mand.o\
-	ft_julia.o\
+	ft_julia.o
 
 all: $(NAME)
 
 $(NAME):$(OBJS) | lib
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread $(LIBS)
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $@ -pthread -c $<
@@ -51,4 +51,4 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
+ 
