@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/27 22:01:42 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/28 21:38:50 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,40 @@ void		ft_crds_scale(t_w *w, int px, int py)
 void			*ft_fractol_select(void *w_ptr)
 {
 	t_param		*p;
+	int			max_pxl;
+	int			px;
+	int			py;
+	int			step;
 
 	//printf("######## ft_fractol_select\n");
 	p = (t_param*)w_ptr;
 	pthread_mutex_lock(&p->w->lock_x);
-	p->w->px = p->pflow;
-	while (p->w->px < W_WIDTH)
+	px = p->pflow;
+	step = W_WIDTH / p->w->threads;
+	max_pxl = step * (p->pflow + 1);
+	px = step * p->pflow;
+	//printf("######## ft_fractol_select w->px=%d w->py=%d max_pxl=%d p->pflow=%d\n", p->w->px, p->w->py, max_pxl, p->pflow);
+	while (px < max_pxl)
 	{
-		p->w->py = 0;
-		while (p->w->py < W_HEIGHT)
+		py = 0;
+		while (py < W_HEIGHT)
 		{
 			if (p->w->f_type == 0)
-				ft_mand(p->w, p->w->px, p->w->py);
+				ft_mand(p->w, px, py);
 			else if ((p->w->f_type == 1) || (p->w->f_type == 11))
-				ft_julia(p->w, p->w->px, p->w->py);
-			p->w->py++;
+				ft_julia(p->w, px, py);
+			py++;
 		}
-		p->w->px += p->w->threads;
+		px += 1;//p->w->threads;
 	}
 	//printf("######## ft_fractol_select w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", p->w->px, p->w->py, p->w->last_px, p->pflow);
 	//printf("######## ft_fractol_select end ########\n");
 	pthread_mutex_unlock(&p->w->lock_x);
+	//if (!(p->pflow % 2))
+	//	pthread_exit(NULL);
 	return (NULL);
 }
+
 /*	x = thread_param->pixel_start;
 	while (x < WINDOW_WIDTH)
 	{
@@ -73,6 +84,7 @@ void			*ft_fractol_select(void *w_ptr)
 		}
 		x += THREADS_NUM;
 	} */
+	
 /*
 ** **************************************************************************
 **	static void ft_thread_run(t_w *w)
@@ -82,10 +94,9 @@ void			*ft_fractol_select(void *w_ptr)
 
 static pthread_t		*ft_thread_run(t_w *w)
 {
-	
-	
 	pthread_t			tid[w->threads];
 	pthread_t			*ptr;
+	pthread_attr_t 		attr;
 	t_param				p[w->threads];
 	int					i;
 	int					res;
@@ -94,16 +105,20 @@ static pthread_t		*ft_thread_run(t_w *w)
 	i = 0;
 	res = 0;
 	pthread_mutex_init(&w->lock_x, NULL);
+	pthread_attr_init(&attr);
 	while (i < w->threads)
 	{
+		pthread_attr_init(&attr);
 		p[i].pflow = i;
 		p[i].w = w;
-		pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]);
 		//ft_fractol_select((void*)&p[i]);
-		/* i++;
+		pthread_create(&tid[i], &attr, ft_fractol_select, (void*)&p[i]);
+		//ft_fractol_select((void*)&p[i]);
+		 i++;
 		p[i].pflow = i;
 		p[i].w = w;
-		ft_fractol_select((void*)&p[i]);*/
+		//pthread_create(&tid[i], &attr, ft_fractol_select, (void*)&p[i]);
+		ft_fractol_select((void*)&p[i]);/**/
 		i++;
 	}
 	i = 0;
