@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/28 18:35:21 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/29 21:14:20 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <pthread.h>
-# define W_WIDTH 1344
-# define W_HEIGHT 1344
+# define W_WIDTH 344
+# define W_HEIGHT 344
 
 #include <time.h>
 //# define ABS(var)((var) < 0 ? -(var) : (var))
@@ -70,7 +70,8 @@ typedef struct		s_w
 
 typedef struct		s_param
 {
-	int				pflow;
+	int				pxfl;
+	int				pyfl;
 	t_w				*w;
 }					t_param;
 

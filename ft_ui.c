@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/28 21:25:54 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/29 18:21:06 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void ft_ui_keys_exp(t_w *w, int key)
 			w->f_type = 1;
 		ft_w_layout(w);
 	}
-	if ((key == P_KEY) && ((w->threads + 16) <= 1024))
+	if ((key == P_KEY) && ((w->threads + 16) <= 32048))
 		w->threads += 16;
 	if ((key == I_KEY) && ((w->threads - 16) >= 1))
 		w->threads -= 16;

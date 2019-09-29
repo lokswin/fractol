@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/28 21:38:50 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/29 21:24:24 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,59 +31,62 @@ void		ft_crds_scale(t_w *w, int px, int py)
 
 /*
 ** **************************************************************************
-**	void ft_thread_select(t_w *w, int i, int j, void (*f)())
+**	void ft_fr_select(t_w *w, int i, int j, void (*f)())
 **	Function for select fractol type from user input
 ** **************************************************************************
 */
 
+static void		ft_fr_select(t_w *w)
+{
+
+	//printf("%d px=%d py=%d\n", ((int)pthread_self()), w->px, w->py);
+	if (w->f_type == 0)
+		ft_mand(w, w->px, w->py);
+	else if ((w->f_type == 1) || (w->f_type == 11))
+		ft_julia(w, w->px, w->py);
+}
+
 void			*ft_fractol_select(void *w_ptr)
 {
 	t_param		*p;
-	int			max_pxl;
-	int			px;
-	int			py;
-	int			step;
+	int			x;
+	int			y;
+//	int			max_pxl;
+//	int			step;
 
-	//printf("######## ft_fractol_select\n");
+	
 	p = (t_param*)w_ptr;
+	x = 0;
+	y = 0;
+	//printf("\n######## ft_fractol_select thread=%d x=%d y=%d\n", ((int)pthread_self()), x, y);
 	pthread_mutex_lock(&p->w->lock_x);
-	px = p->pflow;
-	step = W_WIDTH / p->w->threads;
+	//x = p->pxfl;
+	//y = p->pyfl;
+	//p->w->px = x;
+	//p->w->py = y;
+	//printf("\n######## ft_fractol_select thread=%d x=%d y=%d\n", ((int)pthread_self()), x, y);
+	ft_fr_select(p->w);
+	/*step = W_WIDTH / p->w->threads;
 	max_pxl = step * (p->pflow + 1);
-	px = step * p->pflow;
+	p->w->px = step * p->pflow;
 	//printf("######## ft_fractol_select w->px=%d w->py=%d max_pxl=%d p->pflow=%d\n", p->w->px, p->w->py, max_pxl, p->pflow);
-	while (px < max_pxl)
+	while (p->w->px < max_pxl)
 	{
-		py = 0;
-		while (py < W_HEIGHT)
+		p->w->py = 0;
+		while (p->w->py < W_HEIGHT)
 		{
-			if (p->w->f_type == 0)
-				ft_mand(p->w, px, py);
-			else if ((p->w->f_type == 1) || (p->w->f_type == 11))
-				ft_julia(p->w, px, py);
-			py++;
+			ft_fr_select(p->w);
+			p->w->py++;
 		}
-		px += 1;//p->w->threads;
+		p->w->px += 1;
 	}
+	*/
 	//printf("######## ft_fractol_select w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", p->w->px, p->w->py, p->w->last_px, p->pflow);
 	//printf("######## ft_fractol_select end ########\n");
 	pthread_mutex_unlock(&p->w->lock_x);
-	//if (!(p->pflow % 2))
-	//	pthread_exit(NULL);
+	//pthread_exit(NULL);
 	return (NULL);
 }
-
-/*	x = thread_param->pixel_start;
-	while (x < WINDOW_WIDTH)
-	{
-		y = 0;
-		while (y < WINDOW_HEIGTH)
-		{
-			check_pixel(param, x, y);
-			y += 1;
-		}
-		x += THREADS_NUM;
-	} */
 	
 /*
 ** **************************************************************************
@@ -101,32 +104,73 @@ static pthread_t		*ft_thread_run(t_w *w)
 	int					i;
 	int					res;
 
-	//printf("######## ft_thread_run start ########\n");
+	printf("######## ft_thread_run start ########\n");
 	i = 0;
 	res = 0;
+	w->px = 0;
+	w->py = 0;
 	pthread_mutex_init(&w->lock_x, NULL);
 	pthread_attr_init(&attr);
-	while (i < w->threads)
+	while(i < w->threads)
 	{
-		pthread_attr_init(&attr);
-		p[i].pflow = i;
+		while (w->px < W_HEIGHT)
+		{
+			w->py = 0;
+			while (w->py < W_WIDTH)
+				w->py++;
+			w->px++;
+		}
+		p[i].pxfl = w->px;
+		p[i].pyfl = w->py;
 		p[i].w = w;
-		//ft_fractol_select((void*)&p[i]);
-		pthread_create(&tid[i], &attr, ft_fractol_select, (void*)&p[i]);
-		//ft_fractol_select((void*)&p[i]);
-		 i++;
-		p[i].pflow = i;
-		p[i].w = w;
-		//pthread_create(&tid[i], &attr, ft_fractol_select, (void*)&p[i]);
-		ft_fractol_select((void*)&p[i]);/**/
 		i++;
 	}
+	i = 0;
+	w->px = 0;
+	w->py = 0;
+	while (w->px < W_HEIGHT)
+	{
+		w->py = 0;
+		while (w->py < W_WIDTH)
+		{
+			i++;
+			if (w->py % (W_WIDTH / 8))
+			{
+				ft_fr_select(w);
+			}
+			else
+			{
+				pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]);
+			}
+			w->py++;
+		}
+		w->px += 1;
+	}
+	ft_putnbr(i);
+	/*while ((i + 9) < w->threads)
+	{
+		//ft_putchar('K');
+		p[i].pflow = i;
+		p[i].w = w;
+		//ft_fractol_select((void*)&p[i]);
+		
+		res = i;
+		while (i < res + 4)
+		{
+			i++;
+			
+			//pthread_create(&tid[i], &attr, ft_fractol_select, (void*)&p[i]);
+			ft_fractol_select((void*)&p[i]);
+		}
+		
+		i++;
+	}*//*
 	i = 0;
 	while (i < w->threads)
 	{
 		pthread_join(tid[i], NULL);
 		i++;
-	}
+	}*//**/
 	ptr = tid;
 	return(ptr);
 	//printf("######## ft_thread_run end ########\n");
@@ -163,15 +207,23 @@ int					ft_draw(t_w *w)
 	int				i;
 	clock_t			t;
 	double			time_taken;
-	
+	int				j;
+
 	i = 0;
+	j = 0;
 	t = clock();
-	w->px = 0;
-	w->py = 0;
-	w->last_px = 0;
-	w->flow = 1;
 	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
 	ft_thread_run(w);
+	while (i < W_WIDTH)
+	{
+		j = W_HEIGHT - 20;
+		while (j < W_HEIGHT)
+		{
+			ft_img_pxl_put(w, i, j, 0);
+			j++;
+		}
+		i++;
+	}
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_man(w);
 	t = clock() - t;
@@ -219,8 +271,8 @@ void			*ft_multi2(void *w_ptr)
 	int			tmp_y;
 
 	p = (t_param*)w_ptr;
-	printf("######## ft_fractol_select2 w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", p->w->px, p->w->py, p->w->last_px, p->pflow);
-	tmp_x = p->pflow;
+	printf("######## ft_fractol_select2 w->px=%d w->py=%d w->last_px=%d w->flow=%d\n", p->w->px, p->w->py, p->w->last_px, p->pyfl);
+	tmp_x = p->pyfl;
 	while (tmp_x < W_WIDTH)
 	{
 		tmp_y = 0;
@@ -245,5 +297,6 @@ void			*ft_multi2(void *w_ptr)
 **	man /usr/share/man/man3/mlx_new_image.1
 **	man /usr/share/man/man3/mlx_new_window.1
 **	man /usr/share/man/man3/mlx_pixel_put.1
+**	if o1 then o2 else o3		o1 ? o2 : o3
 ** **************************************************************************
 */

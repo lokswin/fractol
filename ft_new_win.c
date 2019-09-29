@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/28 21:31:15 by drafe            ###   ########.fr       */
+/*   Updated: 2019/09/29 21:25:06 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void		ft_w_layout(t_w *w)
 	w->b_clr = 0XFFFFFF;
 	w->g_clr = 0XFFFFFF;
 	w->r_clr = 0XFFFFFF;
-	w->max_i = 300;
+	w->max_i = 10000;
 	w->zm = 1;
 	w->mv_y = 0;
-	w->threads = 4;//W_HEIGHT / 2;
+	w->threads = 120000;
 	if (w->f_type == 0)
 		w->mv_x = -0.5;
 	if (w->f_type == 1)
@@ -36,7 +36,7 @@ void		ft_w_layout(t_w *w)
 
 /*
 ** **************************************************************************
-**	int fdf_new_win(t_w *w, int p_nb, char *source_f)
+**	int fdf_new_win(t_w *w, int p_nb, char *source_f)W_HEIGHT
 **	Function to initialize window and image in struct t_w w
 ** **************************************************************************
 */
