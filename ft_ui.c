@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/29 18:21:06 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/02 22:08:33 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 			ft_zoom(w, &x, &y);
 		else
 			w->zm /= pow(1.001, 1000);
-		ft_draw(w);
+//		ft_draw(w);
 		ft_putstr("%zooming done!");
 	}
 	return ((int)param);
@@ -80,11 +80,7 @@ static void ft_ui_keys_exp(t_w *w, int key)
 			w->f_type = 1;
 		ft_w_layout(w);
 	}
-	if ((key == P_KEY) && ((w->threads + 16) <= 32048))
-		w->threads += 16;
-	if ((key == I_KEY) && ((w->threads - 16) >= 1))
-		w->threads -= 16;
-	ft_draw(w);
+//	ft_draw(w);
 }
 
 /*
@@ -99,10 +95,7 @@ int		ft_ui_keys(int key, void *param)
 	t_w		*w;
 
 	w = (t_w*)param;
-	if (key == ESC)
-		exit(0);
-	if ((key == PLUS_KEY) || (key == MINUS_KEY) || (key == SPACE) || \
-	(key == ESC) || (key == P_KEY) || (key == I_KEY) || (key == O_KEY))
+	if ((key == PLUS_KEY) || (key == MINUS_KEY) || (key == SPACE) || (key == O_KEY))
 		ft_ui_keys_exp(w, key);
 	if ((key == A_KEY) && (w->f_type == 1))
 		w->f_type = 11;
@@ -129,7 +122,7 @@ void		ft_ui(t_w *new_w)
 	printf("\n-------ft_ui start-------\n");
 	new_w->win_p = mlx_new_window(new_w->mlx_p, W_WIDTH, W_HEIGHT, "Fractol");
 	ft_putstr("Fractol man:\n\
-	ESC : quit Fractol\n\
+	ESC : quit\n\
 	R - change red color\n\
 	G - change green color\n\
 	B - change blue color\n\

@@ -8,6 +8,12 @@
         "unordered_map": "c",
         "hashtable": "c",
         "complex": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "__split_buffer": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "string": "c",
+        "vector": "c"
     }
 }

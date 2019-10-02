@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/09/29 21:14:20 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/02 21:54:03 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <pthread.h>
-# define W_WIDTH 344
-# define W_HEIGHT 344
-
 #include <time.h>
+# define W_WIDTH 800
+# define W_HEIGHT 800
+
 //# define ABS(var)((var) < 0 ? -(var) : (var))
 
 /*
@@ -68,10 +68,18 @@ typedef struct		s_w
 	void			*img_p;
 }					t_w;
 
+typedef struct		s_fractol
+{
+	double			re;
+	double			im;
+	double			x;
+	double			y;
+}					t_fractol;
+
 typedef struct		s_param
 {
-	int				pxfl;
-	int				pyfl;
+	int				px_beg;
+	int				px_end;
 	t_w				*w;
 }					t_param;
 
@@ -84,8 +92,8 @@ void				*ft_fractol_select(void *w_ptr);
 void				*ft_multi(void *pxl_ptr);
 void				*ft_multi2(void *pxl_ptr);
 
-void				ft_mand(t_w *w, int px, int py);
-void				ft_julia(t_w *w, int px, int py);
+void				ft_mand(t_param *p);
+void				ft_julia(t_param *p);
 
 void				ft_img_pxl_put(t_w *w, int x, int y, int i);
 void				ft_draw_man(t_w *w);
@@ -94,6 +102,7 @@ void				ft_new_win(t_w *w);
 void				ft_w_layout(t_w *w);
 
 void				ft_ui(t_w *w);
+int					ft_keyrelease(int keycode, t_w *w);
 int					ft_ui_keys(int key, void *param);
 int					ft_ui_mouse(int key, int x, int y, void *param);
 int					ft_mouse_mv(int x, int y, void *param);
