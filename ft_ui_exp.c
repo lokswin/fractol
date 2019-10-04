@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/02 22:08:17 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/04 19:59:22 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,50 +39,32 @@ void		ft_move_shape(t_w *w, int key)
 		w->mv_y += 0.0003 * (1000 / w->zm);
 	if (key == ARROW_U)
 		w->mv_y -= 0.0003 * (1000 / w->zm);
-//	ft_draw(w);
+	ft_draw(w);
 }
 
 /*
 ** **************************************************************************
 **	void ft_change_shape(t_w *w, int key)
-**	Function to change pic with keys
+**	Function to change Julia with keys
 ** **************************************************************************
 */
 
 void		ft_change_shape(t_w *w, int key)
 {
-	if (w->f_type == 1)
+	if ((w->f_type == 1) || (w->f_type == 11) || (w->f_type == 2))
 	{
+		
 		if (key == NUM_6)
-			w->j_cre += 0.0002 * (1000 / w->zm);
+			w->j_cim += 1;
+		/*	w->j_cre += 0.0002 * (1000 / w->zm);
 		if (key == NUM_4)
 			w->j_cre -= 0.0002 * (1000 / w->zm);
 		if (key == NUM_2)
 			w->j_cim += 0.0002 * (1000 / w->zm);
 		if (key == NUM_8)
-			w->j_cim -= 0.0002 * (1000 / w->zm);
-//		ft_draw(w);
+			w->j_cim -= 0.0002 * (1000 / w->zm);*/
+		ft_draw(w);
 	}
-}
-
-/*
-** **************************************************************************
-**	void ft_change_color(t_w *w, int key)
-**	Function to change color
-** **************************************************************************
-*/
-
-void		ft_change_color(t_w *w, int key)
-{
-	if (key == R_KEY)
-		w->r_clr += INT32_MAX / 7;
-	if (key == G_KEY)
-		w->g_clr += INT32_MAX / 7;
-	if (key == B_KEY)
-		w->b_clr += INT32_MAX / 7;
-	if (key == C_KEY)
-		w->lsd = 1;
-//	ft_draw(w);
 }
 
 int			ft_mouse_mv(int x, int y, void *param)
@@ -93,16 +75,14 @@ int			ft_mouse_mv(int x, int y, void *param)
 	if (w->f_type == 11)
 	{
 		if (y > 0)
-			w->j_cre += 0.005 / w->zm;
-		if (y < 0)
-			w->j_cre -= 0.005 / w->zm;
-		if (x > 0)
 			w->j_cim += 0.005 / w->zm;
-		if (x < 0)
+		if (y < 0)
 			w->j_cim -= 0.005 / w->zm;
-		w->m_x = x;
-		w->m_x = y;
+		if (x > 0)
+			w->j_cre += 0.005 / w->zm;
+		if (x < 0)
+			w->j_cre -= 0.005 / w->zm;
+		ft_draw(w);
 	}
-//	ft_draw(w);
 	return (0);
 }

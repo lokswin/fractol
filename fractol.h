@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/02 21:54:03 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/03 21:14:08 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct		s_w
 	double			j_cre;
 	int				m_x;
 	int				m_y;
-	int				last_px;
 	int				px;
 	int				py;
 	int				max_i;
@@ -78,12 +77,13 @@ typedef struct		s_fractol
 
 typedef struct		s_param
 {
-	int				px_beg;
-	int				px_end;
+	int				py_beg;
+	int				py_end;
 	t_w				*w;
 }					t_param;
 
 void				ft_init_arr_fractols(t_w *w);
+void				ft_putman(void);
 
 void				ft_crds_scale(t_w *w, int px, int py);
 int					ft_draw(t_w *w);
@@ -94,9 +94,11 @@ void				*ft_multi2(void *pxl_ptr);
 
 void				ft_mand(t_param *p);
 void				ft_julia(t_param *p);
+void				ft_koch(t_param *p);
+void				ft_burning_ship(t_param *p);
 
 void				ft_img_pxl_put(t_w *w, int x, int y, int i);
-void				ft_draw_man(t_w *w);
+void				ft_draw_iter(t_w *w);
 
 void				ft_new_win(t_w *w);
 void				ft_w_layout(t_w *w);

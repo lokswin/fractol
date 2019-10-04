@@ -6,20 +6,27 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/02 21:26:25 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/04 20:25:11 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+/*
+** **************************************************************************
+**	void ft_w_layout(t_w *w)
+**	Function to set standart params
+** **************************************************************************
+*/
+
 void		ft_w_layout(t_w *w)
 {
 	printf("\n-------w_layout start-------\n");
 	w->lsd = 0;
-	w->b_clr = 0XFFFFFF;
-	w->g_clr = 0XFFFFFF;
-	w->r_clr = 0XFFFFFF;
-	w->max_i = 100;
+	w->b_clr = 0X000000;//0XFFFFFF;
+	w->g_clr = 0X000000;//0XFFFFFF;
+	w->r_clr = 0X000000;//0XFFFFFF;
+	w->max_i = 50;
 	w->zm = 1;
 	w->mv_y = 0;
 	w->threads = 16;
@@ -31,12 +38,25 @@ void		ft_w_layout(t_w *w)
 		w->j_cre = -0.7;
 		w->j_cim = 0.27015;
 	}
+	if (w->f_type == 2)
+	{
+		w->mv_x = 0.5;
+		w->mv_y = 0.5;
+		w->j_cre = -0.7;
+		w->j_cim = 0;//0.27015;
+	}
+	if (w->f_type == 5)
+	{
+		w->mv_x = -0.5;
+		w->mv_y = -0.5;
+	}
+
 	printf("-------w_layout end-------\n");
 }
 
 /*
 ** **************************************************************************
-**	int fdf_new_win(t_w *w, int p_nb, char *source_f)W_HEIGHT
+**	int fdf_new_win(t_w *w, int p_nb, char *source_f)
 **	Function to initialize window and image in struct t_w w
 ** **************************************************************************
 */

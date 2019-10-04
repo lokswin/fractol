@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/02 22:05:46 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/04 19:23:31 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ void		ft_crds_scale(t_w *w, int px, int py)
 void			*ft_fractol_select(void *w_ptr)
 {
 	t_param		*p;
-//	int			max_pxl;
-//	int			step;
 
 	p = (t_param*)w_ptr;
-	//pthread_mutex_lock(&p->w->lock_x);
 	if (p->w->f_type == 0)
 		ft_mand(p);
 	if ((p->w->f_type == 1) || (p->w->f_type == 11))
 		ft_julia(p);
+	if (p->w->f_type == 2)
+		ft_koch(p);
+	if (p->w->f_type == 5)
+		ft_burning_ship(p);	
 	//printf("\n######## ft_fractol_select thread=%d x=%d y=%d\n", ((int)pthread_self()), p->w->px, p->w->py);
 	//printf("######## ft_fractol_select end ########\n");
-	//pthread_mutex_unlock(&p->w->lock_x);
 	return (NULL);
 }
 	
@@ -63,16 +63,13 @@ void			*ft_fractol_select(void *w_ptr)
 
 static void		ft_thread_run(t_w *w)
 {
-	pthread_t			tid[140000];
-	pthread_attr_t 		attr;
-	t_param				p[140000];
+	pthread_t			tid[w->threads];
+	t_param				p[w->threads];
 	int					i;
 	int					res;
 
 	//printf("######## ft_thread_run start ########\n");
 	pthread_mutex_init(&w->lock_x, NULL);
-	pthread_attr_init(&attr);
-	//w->threads += w->zm
 	i = 0;
 	w->px = 0;
 	w->py = 0;
@@ -82,9 +79,8 @@ static void		ft_thread_run(t_w *w)
 		w->px = 0;
 		w->py = 0;
 		p[i].w = w;
-		p[i].px_beg = (W_HEIGHT / w->threads) * i;
-		p[i].px_end = (W_HEIGHT / w->threads) * (i + 1);
-		printf("beg=%d end=%d\n", p[i].px_beg, p[i].px_end);
+		p[i].py_beg = (W_HEIGHT / w->threads) * i;
+		p[i].py_end = (W_HEIGHT / w->threads) * (i + 1);
 		pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]);
 		i++;
 	}
@@ -116,7 +112,7 @@ int					ft_draw(t_w *w)
 	t = clock();
 	printf("\n-------ft_draw start--zm=%f x=%f y=%f\n", w->zm, w->mv_x, w->mv_y);
 	ft_thread_run(w);
-	while (i < 380)
+	while (i < 320)
 	{
 		j = W_HEIGHT - 20;
 		while (j < W_HEIGHT)
@@ -127,7 +123,7 @@ int					ft_draw(t_w *w)
 		i++;
 	}
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
-	ft_draw_man(w);
+	ft_draw_iter(w);
 	t = clock() - t;
     time_taken = ((double)t) / CLOCKS_PER_SEC;
 	printf("\ntime_taken = %f\n", time_taken);
