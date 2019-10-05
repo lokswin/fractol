@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/03 17:33:51 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 18:49:16 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define KEYS_H
 
 # define ESC 53
-# define KEY_F1 122
+# define KEY_1 18
 
 # define Q_KEY 12
 # define W_KEY 13

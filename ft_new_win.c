@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/04 20:25:11 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 22:16:07 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,36 @@ void		ft_w_layout(t_w *w)
 	}
 	if (w->f_type == 2)
 	{
-		w->mv_x = 0.5;
-		w->mv_y = 0.5;
-		w->j_cre = -0.7;
-		w->j_cim = 0;//0.27015;
-	}
+		w->lsd = 1;
+		w->zm = 1;
+		w->b_clr = 2147483647 / 7;
+		w->g_clr = 2147483647 / 7;
+		w->r_clr = 2147483647 / 7;
+		w->mv_x = -0.5;
+		w->mv_y = 0;
+		w->j_cre = 1;
+		w->j_cim = 0.1;
+		w->c = 10;
+	}/**/
 	if (w->f_type == 5)
 	{
 		w->mv_x = -0.5;
 		w->mv_y = -0.5;
+	}
+	if (w->f_type == 3)
+	{
+		w->max_i = 10;
+		w->lsd = 1;
+		w->b_clr = 0XFFFFFF;
+		w->g_clr = 0XFFFFFF;
+		w->r_clr = 0XFFFFFF;
+		//w->mv_y = 0;
+	}
+	if (w->f_type == 6)
+	{
+		w->mv_x = 0;
+		w->j_cre = 0.102;
+		w->j_cim = -0.04;
 	}
 
 	printf("-------w_layout end-------\n");
@@ -67,11 +88,12 @@ void			ft_new_win(t_w *w)
 	ft_w_layout(w);
 	if (!(w->mlx_p = mlx_init()))
 	{
-		ft_putstr_fd("mlx error", 2);
+		ft_putstr_fd("mlx_init error", 2);
 		exit (1);
 	}
 	w->img_p = mlx_new_image(w->mlx_p, W_WIDTH, W_HEIGHT);
-	ft_ui(w);
+	w->win_p = mlx_new_window(w->mlx_p, W_WIDTH, W_HEIGHT, "Fractol");
+	ft_ui();
 	if (!w->mlx_p || !w->win_p || !w->img_p)
 	{
 		ft_putstr_fd("mlx error", 2);

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 19:09:08 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/04 19:26:30 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 19:37:37 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,28 @@ void			ft_img_pxl_put(t_w *w, int x, int y, int i)
 void		ft_change_color(t_w *w, int key)
 {
 	if (key == R_KEY)
-		w->r_clr += INT32_MAX / 20;
+		w->r_clr += 2147483647 / 20;
 	if (key == G_KEY)
-		w->g_clr += INT32_MAX / 20;
+		w->g_clr += 2147483647 / 20;
 	if (key == B_KEY)
-		w->b_clr += INT32_MAX / 20;
-	if (key == C_KEY)
-		w->lsd = 1;
+		w->b_clr += 2147483647 / 20;
+	if (key == C_KEY) 
+	{
+		if (w->lsd == 0)
+		{
+			w->b_clr = 0XFFFFFF;
+			w->g_clr = 0XFFFFFF;
+			w->r_clr = 0XFFFFFF;
+			w->lsd = 1;
+		}
+		else
+		{
+			w->b_clr = 0X000000;
+			w->g_clr = 0X000000;
+			w->r_clr = 0X000000;
+			w->lsd = 0;
+		}
+	}
 	ft_draw(w);
 }
 
@@ -80,13 +95,14 @@ void		ft_change_color(t_w *w, int key)
 
 void		ft_putman(void)
 {
-	ft_putstr("usage: ./fractol [fractol number]\n\n\
+	ft_putstr("\nusage: ./fractol [fractol number]\n\n\
 	0 - Mandelbrot set;\n\
 	1 - Julia set;\n\
 	2 - Koch snowflake;\n\
 	3 - Sierpinski carpet;\n\
 	4 - Attractor;\n\
 	5 - Burning ship;\n\
+	6 - Random walk;\n\
 	\n");
 }
 
@@ -101,7 +117,7 @@ void			ft_draw_iter(t_w *w)
 {
 	char		*out_str;
 
-	if (((int)w->zm < INT32_MAX) || ((int)w->zm < INT32_MIN))
+	if (((int)w->zm < 2147483647) || ((int)w->zm < -2147483646))
 	{
 		out_str = ft_strjoin("zoom = ", ft_itoa((int)w->zm));
 		out_str = ft_strjoin(out_str, " iter = ");

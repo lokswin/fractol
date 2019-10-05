@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/04 19:23:31 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 22:11:44 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,11 @@ void			*ft_fractol_select(void *w_ptr)
 		ft_julia(p);
 	if (p->w->f_type == 2)
 		ft_koch(p);
+	if (p->w->f_type == 3)
+		ft_sierpinski(p);
 	if (p->w->f_type == 5)
-		ft_burning_ship(p);	
+		ft_burning_ship(p);
+	
 	//printf("\n######## ft_fractol_select thread=%d x=%d y=%d\n", ((int)pthread_self()), p->w->px, p->w->py);
 	//printf("######## ft_fractol_select end ########\n");
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/04 19:59:22 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 21:14:38 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int			ft_keyrelease(int keycode, t_w *w)
 		mlx_destroy_image(w->mlx_p, w->img_p);
 		mlx_destroy_window(w->mlx_p, w->win_p);
 		exit(1);
+	}
+	if (keycode == KEY_1)
+	{
+		ft_ui();
+		ft_putman();
 	}
 	return (0);
 }
@@ -51,18 +56,30 @@ void		ft_move_shape(t_w *w, int key)
 
 void		ft_change_shape(t_w *w, int key)
 {
-	if ((w->f_type == 1) || (w->f_type == 11) || (w->f_type == 2))
+	if ((w->f_type == 1) || (w->f_type == 11))
 	{
 		
 		if (key == NUM_6)
-			w->j_cim += 1;
-		/*	w->j_cre += 0.0002 * (1000 / w->zm);
+			w->j_cre += 0.0002 * (1000 / w->zm);
 		if (key == NUM_4)
 			w->j_cre -= 0.0002 * (1000 / w->zm);
 		if (key == NUM_2)
 			w->j_cim += 0.0002 * (1000 / w->zm);
 		if (key == NUM_8)
-			w->j_cim -= 0.0002 * (1000 / w->zm);*/
+			w->j_cim -= 0.0002 * (1000 / w->zm);/**/
+		ft_draw(w);
+	}
+	if (w->f_type == 2)
+	{
+		if (key == NUM_6)
+			w->j_cre += 1;
+		if (key == NUM_4)
+			w->j_cre -= 0.1;
+		if (key == NUM_2)
+			w->c += 0.1;
+		if (key == NUM_8)
+			w->c -= 0.1;
+			//w->j_cim -= 0.1;
 		ft_draw(w);
 	}
 }

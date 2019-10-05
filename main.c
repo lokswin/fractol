@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/03 21:18:50 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 17:56:54 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int				main(int argc, char **argv)
 		ft_putman();
 		exit(1);
 	}
-	if ((new_w.f_type = ft_atoi(argv[1])) > 6)
+	if ((new_w.f_type = ft_atoi(argv[1])) > 7)
 	{
 		ft_putman();
 		exit(1);

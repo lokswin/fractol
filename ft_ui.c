@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/03 20:10:03 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 22:15:36 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			ft_ui_mouse(int key, int x, int y, void *param)
 
 static void ft_ui_keys_exp(t_w *w, int key)
 {
-	if ((key == MINUS_KEY) && ((w->max_i - 2) > 2))
+	if ((key == MINUS_KEY) && ((w->max_i - 2) >= 0))
 		w->max_i -= 2;
 	if ((key == PLUS_KEY) && ((w->max_i + 2) < 2000))
 		w->max_i += 2;
@@ -117,21 +117,23 @@ int		ft_ui_keys(int key, void *param)
 ** **************************************************************************
 */
 
-void		ft_ui(t_w *w)
+void		ft_ui(void)
 {
-	printf("\n-------ft_ui start-------\n");
-	w->win_p = mlx_new_window(w->mlx_p, W_WIDTH, W_HEIGHT, "Fractol");
-	ft_putstr("Fractol man:\n\
+	ft_putstr("\nFractol man:\n\n\
 	ESC : quit\n\
 	R - change red color\n\
 	G - change green color\n\
 	B - change blue color\n\
 	C - rainbow\n\
-	SPACE - default\n\
-	NUM(+) - add 50 iterations\n\
-	NUM(-) - remove 50 iterations\n\
+	SPACE - reset to default\n\
+	NUM(+) - add 2 iterations\n\
+	NUM(-) - remove 2 iterations\n\
+	A - Julia mouse vary ON;\n\
+	S - Julia mouse vary OFF;\n\
+	NUM2 / NUM8 - Julia vary Y (+ / -)\n\
+	NUM6 / NUM4 - Julia vary X (+ / -)\n\
+	1 - print help\n\
 	");
-	printf("-------ft_ui end-------\n");
 }
 
 /*

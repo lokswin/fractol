@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/04 20:29:40 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/05 22:07:05 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,76 +14,79 @@
 
 void			ft_koch(t_param *p)
 {
-//	int			y;
-//	int			z;
 	int			x;
+	int			y;
+	int			len;
+	double 		r;
+	double			alp;
+	int			a;
+	double			b;
+	double			c;
 	int			i;
-	int			tmp;
-//	double		x2;
-//	double		y2;
 	t_fractol	f;
 
 	//printf("\n-------ft_koch start-beg=%d end1=%d-\n", p->py_beg, p->py_end);
+	a = p->w->j_cre; b = p->w->j_cim; c = p->w->c;
+	len = 300;
+	alp = 0.785398;
 	pthread_mutex_lock(&p->w->lock_x);
-	printf("j_cim=%f\n", p->w->j_cim);
 	while (p->py_beg < p->py_end)
 	{
 		x = 0;
 		while (x < W_WIDTH)
 		{
-			p->w->x_scl = 1.5 * (x - W_WIDTH / 2) / (0.5 * p->w->zm * W_WIDTH) + p->w->mv_x;
-			p->w->y_scl = (p->py_beg - W_HEIGHT / 2) / (0.5 * p->w->zm * W_HEIGHT) + p->w->mv_y;
-			f.x = x * 0.005;//-0.7;
-			f.y = p->py_beg * 0.005;//0.5;
+			//p->w->x_scl = 1.5 * (x - W_WIDTH / 2) / (0.5 * p->w->zm * W_WIDTH) + p->w->mv_x;
+			//p->w->y_scl = (p->py_beg - W_HEIGHT / 2) / (0.5 * p->w->zm * W_HEIGHT) + p->w->mv_y;
 			f.x = p->w->x_scl;
 			f.y = p->w->y_scl;
+			//f.x = 0;
+			//f.y = 0;
+			a = x;
+			y = p->py_beg;
+			r = f.x;//(rand() % 3) * 0.25;//(rand() % 2) - 0.5;
+			//printf("r=%f\n", r);
 			i = 0;
-			f.re = f.x;
-			f.im = f.y;
-/*//d := z;
-		p3 = (point)
-		x2	(2*p1.x+p2.x)/3,
-		y2	(2*p1.y+p2.y)/3};
-		
-		p5 = (point)
-		re{(2*p2.x+p1.x)/3,
-		im(2*p2.y+p1.y)/3};
-
-		p4 = (point){p3.x + (p5.x - p3.x)*cos(theta) + (p5.y - p3.y)*sin(theta),
-					p3.y - (p5.x - p3.x)*sin(theta) + (p5.y - p3.y)*cos(theta)};*/
-			while (((sqrt(f.x)+sqrt(f.y) < 1e+6) && (sqrt(f.re)+sqrt(f.im) > 1e-6)) &&  (i < p->w->max_i))
+			while ((a > 0 || y > 0) && (i < p->w->max_i))
 			{
+				if ((a % 3 == 1) && (y % 3 == 1)) //checks if the pixel is in the center for the current square level
+            		break;
+        		a /= 3; //x and y are decremented to check the next larger square level
+        		y /= 3;
+				/*if (r < 0.01) 
+				{
+					f.x =  0;
+					f.y =  0.16 * f.im;
+				}
+				else if (r < 0.86)
+				{
+					f.x =  0.85 * f.re + 0.04 * f.im;
+					f.y = -0.04 * f.re + 0.85 * f.im + 1.6;
+				}
+				else if (r < 0.93)
+				{
+					f.x =  0.20 * f.re - 0.26 * f.im;
+					f.y =  0.23 * f.re + 0.22 * f.im + 1.6;
+				}
+				else
+				{
+					f.x = -0.15 * f.re + 0.28 * f.im;
+					f.y =  0.26 * f.re + 0.24 * f.im + 0.44;
+				}
+				len = len / sqrt(2);
 				f.re = f.x;
 				f.im = f.y;
-				//z = f.re + f.y * p->w->j_cim;
-				//f.x = ((3 * pow(z, 4)) + 1) / (4 * pow(z, 3));
-				//f.y = ((3 * pow(z, 4)) + 1) / (4 * pow(z, 3));
-				/*z.x := X * 0.005;
-					z.y := Y * 0.005;
-					d := z;
-					while (sqr(z.x)+sqr(z.y) < max) and (sqr(d.x)+sqr(d.y) > min)
-						and (n < iter) do	begin
-				t := z;
-				{z^3 - 1}
-				p := sqr(sqr(t.x)+sqr(t.y));
-				z.x := 2/3*t.x + (sqr(t.x)-sqr(t.y))/(3*p);
-				z.y := 2/3*t.y*(1-t.x/p);{}
-				d.x := abs(t.x - z.x);
-				d.y := abs(t.y - z.y);
-				Inc(n);*/
-				tmp = sqrt(sqrt(f.re) + sqrt(f.im));
-				f.x = (2/3 * f.re + (sqrt(f.re) - sqrt(f.im))) / (3 * tmp);
-				f.y = 2/3 * f.im * ((1 - f.re) / tmp);
-				f.re = fabs(f.re - f.x);
-				f.im = fabs(f.im - f.y);
-				//f.y = ((3 * pow(f.im, 4)) + 1) / (4 * pow(f.im, 3));
-				//Z[i+1] = Z[i] * Z[i] + C,
-				//f.x = (f.re * f.re) - (f.im * f.im) + p->w->x_scl;
-				//f.y = (2 * f.re * f.im) + p->w->y_scl;
-				//printf("p->w->j_cim=%f\n", p->w->j_cim);
-				//printf("f.x=%f f.y=%f  f.re=%f f.im=%f\n", f.x, f.y, f.re, f.im);
-				//printf("f.x=%f f.y=%f  f.re=%f f.im=%f sum=%f\n", f.x, f.y, f.re, f.im, (f.x * f.x + f.y * f.y));
-				//z = z^(2) / (1 + z + z^(4)) + constant z^(2) / (1 + z + z^(4))
+				if (!(i % 4))
+					alp += 0.785398;
+				else
+					alp += -0.785398;
+				f.x = (f.re * f.re) - (f.im * f.im) + (len * cos(0.785398 + alp));
+				f.y = (2 * f.re * f.im) + (len * sin(0.785398 + alp));*/
+			/*	 length = (length / Math.sqrt(2));
+            c_curve(x, y, length, (alpha + default_angle), (iteration - 1), ctx ); // Recursive Call
+            x = (x + (length * Math.cos(toRadians(alpha + default_angle))));
+            y = (y + (length * Math.sin(toRadians(alpha + default_angle))));
+            c_curve(x, y, length, (alpha - default_angle), (iteration - 1), ctx ); */
+				//printf("f.x=%f f.y=%f f.re=%f f.im=%f sum=%f\n", f.x, f.y, f.re, f.im, f.x * f.x + f.y * f.y);
 				i++;
 			}
 			ft_img_pxl_put(p->w, x, p->py_beg, i);
@@ -95,51 +98,17 @@ void			ft_koch(t_param *p)
 	pthread_exit(NULL);
 	//printf("\n-------ft_mand end-------\n");
 }
-/*
-GLfloat oldx=-0.7,oldy=0.5;
 
-void drawkoch(GLfloat dir,GLfloat len,GLint iter) {
-	GLdouble dirRad = 0.0174533 * dir;  
-	GLfloat newX = oldx + len * cos(dirRad);
-	GLfloat newY = oldy + len * sin(dirRad);
-	if (iter==0) {
-		glVertex2f(oldx, oldy);
-		glVertex2f(newX, newY);
-		oldx = newX;
-		oldy = newY;
-	}
-	else {
-		iter--;
-		//draw the four parts of the side _/\_ 
-		drawkoch(dir, len, iter);
-		dir += 60.0;
-		drawkoch(dir, len, iter);
-		dir -= 120.0;
-		drawkoch(dir, len, iter);
-		dir += 60.0;
-		drawkoch(dir, len, iter);
-	}
-}
-
-void kochCurve(point p1,point p2,int times){
-	point p3,p4,p5;
-	double theta = pi/3;
- 
-	if(times>0){
-		p3 = (point){(2*p1.x+p2.x)/3,(2*p1.y+p2.y)/3};
-		p5 = (point){(2*p2.x+p1.x)/3,(2*p2.y+p1.y)/3};
- 
-		p4 = (point){p3.x + (p5.x - p3.x)*cos(theta) + (p5.y - p3.y)*sin(theta),p3.y - (p5.x - p3.x)*sin(theta) + (p5.y - p3.y)*cos(theta)};
- 
-		kochCurve(p1,p3,times-1);
-		kochCurve(p3,p4,times-1);
-		kochCurve(p4,p5,times-1);
-		kochCurve(p5,p2,times-1);
-	}
- 
-	else{
-		line(p1.x,p1.y,p2.x,p2.y);
-	}
-}
-
-*/
+/*f.re = f.x;
+				f.im = f.y;
+				//xn+1 = yn - sign(xn) | b xn - c |1/2
+				//yn+1 = a - xn
+					a = 1; b = 4; c = 60;
+					a = 2; b = -1; c = 200;
+					a = 10; b = -10; c = 0.01;
+					a = 31; b = 12; c = 0.5;
+					a = 0.1; b = 0.1; c = 10;
+					a = 10; b = 1, c = 60;
+				f.x = f.im - (((f.re > 0) ? 1 : ((f.re < 0) ? -1 : 0)) * pow(fabs(b * f.re - c), 1/2)); //+ p->w->x_scl;
+ 				f.y = a - f.re; //+ p->w->y_scl;
+				 //(((f.re > 0) ? 1 : ((f.re < 0) ? -1 : 0))*/
