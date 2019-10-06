@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/06 19:59:21 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/06 21:32:09 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,37 @@ void		ft_w_layout(t_w *w)
 	}
 	if (w->f_type == 2)
 	{
-		w->lsd = 1;
 		w->zm = 1;
-		w->b_clr = 2147483647 / 7;
-		w->g_clr = 2147483647 / 7;
-		w->r_clr = 2147483647 / 7;
 		w->mv_x = -0.5;
 		w->mv_y = 0;
-		w->j_cre = 1;
+		w->j_cre = 100;
 		w->j_cim = 0.1;
 		w->c = 10;
-	}/**/
+	}
+	if (w->f_type == 3)
+	{
+		w->max_i = 200;
+		w->zm = 0.000368;
+		w->mv_x = 9000000000;
+		w->mv_y = 9000000000;
+		w->lsd = 1;
+		w->b_clr = 0XFFFFFF;
+		w->g_clr = 0XFFFFFF;
+		w->r_clr = 0XFFFFFF;
+	}
 	if (w->f_type == 5)
 	{
 		w->mv_x = -0.5;
 		w->mv_y = -0.5;
 	}
-	if (w->f_type == 3)
-	{
-		w->max_i = 100;
-		w->zm = 0.055;
-		w->mv_x = 100000000;
-		w->mv_y = 100000000;
-		w->lsd = 1;
-		w->b_clr = 0XFFFFFF;
-		w->g_clr = 0XFFFFFF;
-		w->r_clr = 0XFFFFFF;
-		//w->mv_y = 0;
-	}
+	
 	if (w->f_type == 6)
 	{
 		w->mv_x = 0;
 		w->lsd = 1;
-		w->b_clr = 0XFFFFFF;
-		w->g_clr = 0XFFFFFF;
-		w->r_clr = 0XFFFFFF;
+		w->b_clr = 0X000000;
+		w->g_clr = 0X000000;
+		w->r_clr = 0X000000;
 		w->j_cre = 0.102;
 		w->j_cim = -0.04;
 	}

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/05 21:14:38 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/06 21:00:34 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void		ft_change_shape(t_w *w, int key)
 		if (key == NUM_4)
 			w->j_cre -= 0.1;
 		if (key == NUM_2)
-			w->c += 0.1;
+			w->c += 1;
 		if (key == NUM_8)
-			w->c -= 0.1;
+			w->c -= 1;
 			//w->j_cim -= 0.1;
 		ft_draw(w);
 	}
