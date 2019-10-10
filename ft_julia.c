@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/06 20:52:37 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/10 22:09:31 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,11 @@
 
 void		ft_julia(t_param *p)
 {
-//	int			y;
 	int			x;
 	int			i;
 	t_fractol	f;
 
 	i = 0;
-	//printf("\n-------ft_mand start-px1=%d py1=%d-\n", p->w->px, p->w->py);
 	pthread_mutex_lock(&p->w->lock_x);
 	while (p->py_beg < p->py_end)
 	{
@@ -54,5 +52,4 @@ void		ft_julia(t_param *p)
 	}
 	pthread_mutex_unlock(&p->w->lock_x);
 	pthread_exit(NULL);
-	//printf("\n-------ft_pxl_analyze end-------\n");
 }

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/05 22:09:18 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/10 22:06:43 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct		s_w
 	pthread_mutex_t lock_x;
 	char			*img;
 	int				threads;
-	double				c;
+	double			cycle;
 	int				stop;
 	int				file_w;
 	int				file_h;
@@ -94,10 +94,12 @@ void				*ft_multi2(void *pxl_ptr);
 
 void				ft_mand(t_param *p);
 void				ft_julia(t_param *p);
-void				ft_koch(t_param *p);
+void				ft_carpet(t_param *p);
+void				ft_self_call(t_param *p);
 void				ft_sierpinski(t_param *p);
 void				ft_burning_ship(t_param *p);
 void				ft_rand_walk(t_param *p);
+void				ft_henon(t_param *p);
 
 void				ft_img_pxl_put(t_w *w, int x, int y, int i);
 void				ft_draw_iter(t_w *w);
@@ -106,14 +108,14 @@ void				ft_new_win(t_w *w);
 void				ft_w_layout(t_w *w);
 
 void				ft_ui();
-int					ft_keyrelease(int keycode, t_w *w);
+int					ft_keyrelease(int key, t_w *w);
 int					ft_ui_keys(int key, void *param);
 int					ft_ui_mouse(int key, int x, int y, void *param);
 int					ft_mouse_mv(int x, int y, void *param);
 void				ft_zoom(t_w *w, int *x, int *y);
 
-void				ft_move_shape(t_w *w, int key);
-void				ft_change_shape(t_w *w, int key);
+void				ft_move_sh(t_w *w, int key);
+void				ft_change_sh(t_w *w, int key);
 void				ft_change_color(t_w *w, int key);
 
 

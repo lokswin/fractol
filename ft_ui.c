@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/05 22:15:36 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/10 20:54:36 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,10 @@ int		ft_ui_keys(int key, void *param)
 	if ((key == R_KEY) || (key == G_KEY) || (key == B_KEY) || (key == C_KEY))
 		ft_change_color(w, key);
 	if ((key == ARROW_U) || (key == ARROW_D) || (key == ARROW_R) || (key == ARROW_L))
-		ft_move_shape(w, key);
-	if ((key == NUM_2) || (key == NUM_4) || (key == NUM_6) || (key == NUM_8))
-		ft_change_shape(w, key);
+		ft_move_sh(w, key);
+	if ((key == NUM_2) || (key == NUM_4) || (key == NUM_6) || (key == NUM_8) \
+	|| (key == I_KEY) || (key == P_KEY))
+		ft_change_sh(w, key);
 	return ((int)param);
 }
 

@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 19:09:08 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/05 19:37:37 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/10 18:51:24 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void			ft_img_pxl_put(t_w *w, int x, int y, int i)
 	int			tmp1;
 	int			col;
 
-	//printf("\n-------ft_img_pxl_put start---x=%d y=%d \n", x, y);
 	t = (double)i / (double)w->max_i;
 	j = (x * (w->bitspp / 8)) + (y * w->ln_sz);
 	tmp1 = (int)((w->b_clr) * (1 - t) * pow(t, 3) * 255);
