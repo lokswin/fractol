@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/15 21:35:58 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/15 21:36:26 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void			*ft_fractol_select(void *w_ptr)
 static void			ft_thread_run(t_w *w)
 {
 	pthread_t		tid[w->threads];
-	∫B
+	t_param			p[w->threads];
 	int				i;
 
 	pthread_mutex_init(&w->lock_x, NULL);
