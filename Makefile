@@ -6,7 +6,7 @@
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/10/10 22:07:07 by drafe            ###   ########.fr        #
+#    Updated: 2019/10/15 17:04:41 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ OBJS = main.o\
 	ft_colors.o\
 	ft_mand.o\
 	ft_julia.o\
+	ft_mand_fish.o\
+	ft_mand_tricorn.o\
 	ft_self_call.o\
 	ft_carpet.o\
 	ft_henon.o\
