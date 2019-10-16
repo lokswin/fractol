@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/15 20:58:50 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 12:55:29 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int			ft_ui_keys(int key, void *param)
 	if ((key == NUM_2) || (key == NUM_4) || (key == NUM_6) || (key == NUM_8) \
 	|| (key == I_KEY) || (key == P_KEY))
 		ft_change_sh(w, key);
+	if ((key == A_KEY) && (w->f_type == 1))
+		w->f_type = 11;	
 	return ((int)param);
 }
 
@@ -118,7 +120,10 @@ int			ft_ui_keys(int key, void *param)
 */
 
 void		ft_ui(void)
-{
+{	
+	pid_t	pid;
+
+	pid = getpid();
 	ft_putstr("\nFractol man:\n\n\
 	ESC : quit\n\
 	SPACE - reset to default\n\
@@ -136,15 +141,7 @@ void		ft_ui(void)
 	I - Self call param -;\n\
 	P - Self call param +;\n\
 	O - redraw;\n\
-	");
+	pid:");
+	ft_putnbr(pid);
+	ft_putstr("\n");
 }
-
-/*
-** **************************************************************************
-**	man /usr/share/man/man3/mlx.1
-**	man /usr/share/man/man3/mlx_loop.1
-**	man /usr/share/man/man3/mlx_new_image.1
-**	man /usr/share/man/man3/mlx_new_window.1
-**	man /usr/share/man/man3/mlx_pixel_put.1
-** **************************************************************************
-*/
