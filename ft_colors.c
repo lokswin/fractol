@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 19:09:08 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/16 13:13:29 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 19:16:17 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,17 @@ void			ft_draw_iter(t_w *w)
 	if (((int)w->zm < 2147483647) || ((int)w->zm < -2147483646))
 	{
 		str_nbr = ft_itoa((int)w->zm);
-		out_str = ft_strjoin("zoom = ", str_nbr);
-		tmp = out_str;
-		ft_strdel(&out_str);
-		ft_strdel(&str_nbr);
+		tmp = ft_strjoin("zoom = ", str_nbr);
 		out_str = ft_strjoin(tmp, " iter = ");
+		ft_strdel(&str_nbr);
 		str_nbr = ft_itoa((int)w->max_i);
+		ft_strdel(&tmp);
 		tmp = out_str;
 		ft_strdel(&out_str);
 		out_str = ft_strjoin(tmp, str_nbr);
-		ft_strdel(&str_nbr);
-		ft_strdel(&tmp);
 		mlx_string_put(w->mlx_p, w->win_p, 5, H - 20, \
 		0x9C4CC4, out_str);
-		ft_strdel(&out_str);
+		ft_strdel(&str_nbr);
+		ft_strdel(&tmp);
 	}
 }

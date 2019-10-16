@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/16 12:51:25 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 19:03:54 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void				ft_putman(void)
 {
-	ft_putstr("\nusage: ./fractol [fractol number]\n\n\
+	ft_putstr("\nusage: ./fractol [fractol number] [fractol number]\n\n\
 	0 - Mandelbrot set;\n\
 	1 - Julia set;\n\
 	2 - Fish;\n\
@@ -85,8 +85,6 @@ static void			ft_thread_run(t_w *w)
 
 	pthread_mutex_init(&w->lock_x, NULL);
 	i = 0;
-	w->px = 0;
-	w->py = 0;
 	while (i < w->threads)
 	{
 		p[i].w = w;
@@ -134,7 +132,7 @@ void				ft_draw(t_w *w)
 		j = W - 20;
 		while (j < H)
 		{
-			ft_img_pxl_put(w, i, j, 0);
+			ft_img_pxl_put(w, i, j, 1);
 			j++;
 		}
 		i++;

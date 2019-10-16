@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/15 21:24:12 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 18:19:10 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,12 @@ typedef struct		s_w
 	char			*img;
 	int				threads;
 	double			cycle;
-	int				stop;
-	int				file_w;
-	int				file_h;
-	int				file_l;
 	double			x_scl;
 	double			y_scl;
 	double			j_cim;
 	double			j_cre;
 	int				m_x;
 	int				m_y;
-	int				px;
-	int				py;
 	int				max_i;
 	int				b_clr;
 	int				g_clr;
@@ -59,7 +53,6 @@ typedef struct		s_w
 	double			zm;
 	double			mv_x;
 	double			mv_y;
-	double			fractols[5][3];
 	void			*mlx_p;
 	void			*win_p;
 	void			*img_p;
@@ -118,4 +111,5 @@ int					ft_mouse_mv(int x, int y, void *param);
 void				ft_move_sh(t_w *w, int key);
 void				ft_change_sh(t_w *w, int key);
 void				ft_change_color(t_w *w, int key);
+void				fractol_safe_exit(t_w *w);
 #endif

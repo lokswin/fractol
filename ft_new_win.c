@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/15 20:55:01 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 18:45:26 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,15 +132,8 @@ void			ft_new_win(t_w *w)
 
 	head = ft_strjoin("Fractol - ", ft_w_layout(w));
 	w->threads = 16;
-	w->mlx_p = mlx_init();
-	if (!w->mlx_p)
-	{
-		ft_putstr_fd("mlx_init error", 2);
-		exit(1);
-	}
 	w->win_p = mlx_new_window(w->mlx_p, W, H, head);
-	free(head);
-	head = NULL;
+	ft_strdel(&head);
 	w->img_p = mlx_new_image(w->mlx_p, W, H);
 	ft_ui();
 	if (!w->mlx_p || !w->win_p || !w->img_p)

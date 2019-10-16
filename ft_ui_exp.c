@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/15 21:22:41 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 18:20:47 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				ft_keyrelease(int key, t_w *w)
 	{
 		mlx_destroy_image(w->mlx_p, w->img_p);
 		mlx_destroy_window(w->mlx_p, w->win_p);
-		exit(1);
+		exit(0);
 	}
 	if (key == KEY_1)
 	{
