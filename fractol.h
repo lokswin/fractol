@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 17:45:14 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/16 18:19:10 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 19:48:02 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 # include "./libft/libft.h"
 # include "keys.h"
 # include "mlx.h"
-# include <stdio.h>
 # include <math.h>
 # include <pthread.h>
-# include <time.h>
 # define W 800
 # define H 800
 

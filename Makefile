@@ -6,13 +6,13 @@
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/10/16 12:22:42 by drafe            ###   ########.fr        #
+#    Updated: 2019/10/16 19:29:27 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = fractol
 
@@ -41,22 +41,22 @@ OBJS = main.o\
 
 all: $(NAME)
 
-$(NAME):$(OBJS) | lib
+$(NAME): $(OBJS) | lib
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) -l pthread
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 lib:
-	@make -f Makefile.libft
+	make -f Makefile.libft
 
 clean:
-	@make -f Makefile.libft clean
-	@rm -rf $(OBJS)
+	make -f Makefile.libft clean
 
-fclean: clean
-	@make -f Makefile.libft fclean
-	@rm -f $(NAME)
+fclean:
+	make -f Makefile.libft fclean
+	rm -rf $(OBJS)
+	rm -f $(NAME)
 
 re: fclean all
  

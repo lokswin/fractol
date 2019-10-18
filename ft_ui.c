@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/16 18:30:36 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 19:51:11 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int			ft_ui_keys(int key, void *param)
 */
 
 void		ft_ui(void)
-{	
+{
 	pid_t	pid;
 
 	pid = getpid();

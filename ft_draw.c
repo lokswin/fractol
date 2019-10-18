@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/16 19:03:54 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 19:52:48 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,29 +84,25 @@ static void			ft_thread_run(t_w *w)
 	int				i;
 
 	pthread_mutex_init(&w->lock_x, NULL);
-	i = 0;
-	while (i < w->threads)
+	i = -1;
+	while (++i < w->threads)
 	{
 		p[i].w = w;
 		p[i].py_beg = (H / w->threads) * i - 1;
 		p[i].py_end = (H / w->threads) * (i + 1);
-		if(pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]) != 0)
+		if (pthread_create(&tid[i], NULL, ft_fractol_select, (void*)&p[i]) != 0)
 		{
 			ft_putstr_fd("pthread_create error", 2);
 			exit(1);
 		}
-		i++;
 	}
-	i = 0;
-	while (i < w->threads)
-	{
-		if(pthread_join(tid[i], NULL) != 0)
+	i = -1;
+	while (++i < w->threads)
+		if (pthread_join(tid[i], NULL) != 0)
 		{
 			ft_putstr_fd("pthread_join error", 2);
 			exit(1);
 		}
-		i++;
-	}
 }
 
 /*
@@ -119,13 +115,10 @@ static void			ft_thread_run(t_w *w)
 void				ft_draw(t_w *w)
 {
 	int				i;
-	clock_t			t;
-	double			time_taken;
 	int				j;
 
 	i = 0;
 	j = 0;
-	t = clock();
 	ft_thread_run(w);
 	while (i < 320)
 	{
@@ -139,7 +132,4 @@ void				ft_draw(t_w *w)
 	}
 	mlx_put_image_to_window(w->mlx_p, w->win_p, w->img_p, 0, 0);
 	ft_draw_iter(w);
-	t = clock() - t;
-	time_taken = (double)t / CLOCKS_PER_SEC;
-	printf("\ntime_taken = %f\n", time_taken);
 }

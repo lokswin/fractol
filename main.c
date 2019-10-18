@@ -6,7 +6,7 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 17:32:09 by drafe             #+#    #+#             */
-/*   Updated: 2019/10/16 19:13:34 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 20:05:25 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 ** **************************************************************************
-**	int main(int argc, char **argv)
-**	Function to get user map
+**	static void ft_main_err(void)
+**	Function to print usage
 ** **************************************************************************
 */
 
@@ -27,7 +27,7 @@ static void		ft_main_err(void)
 
 /*
 ** **************************************************************************
-**	static void ft_win_sec(t_w *w)
+**	static void ft_win_start(t_w *w)
 **	Function for handle windows
 ** **************************************************************************
 */
@@ -73,6 +73,7 @@ int				main(int argc, char **argv)
 	else if (argc == 3)
 		ft_win_start(&sec_new_w);
 	ft_win_start(&new_w);
+	ft_ui();
 	mlx_loop(new_w.mlx_p);
 	exit(0);
 }

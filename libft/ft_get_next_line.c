@@ -6,18 +6,18 @@
 /*   By: drafe <drafe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 20:26:45 by drafe             #+#    #+#             */
-/*   Updated: 2019/07/26 17:17:17 by drafe            ###   ########.fr       */
+/*   Updated: 2019/10/16 19:50:00 by drafe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_gnl_write(char **line, char **s_file)
+int				ft_gnl_write(char **line, char **s_file)
 {
-	char			*out;
-	char			*ptr;
-	size_t			out_len;
-	size_t			s_len;
+	char		*out;
+	char		*ptr;
+	size_t		out_len;
+	size_t		s_len;
 
 	out_len = 0;
 	s_len = ft_strlen(*s_file);
@@ -36,12 +36,12 @@ int			ft_gnl_write(char **line, char **s_file)
 	return (out_len);
 }
 
-int			ft_gnl_read(const int fd, char **s)
+int				ft_gnl_read(const int fd, char **s)
 {
-	char			*tmp;
-	char			*ptr;
-	int				bytes;
-	size_t			i;
+	char		*tmp;
+	char		*ptr;
+	int			bytes;
+	size_t		i;
 
 	if (!(tmp = (char *)malloc(sizeof(char) * (32 + 1))))
 		return (-1);
@@ -64,10 +64,10 @@ int			ft_gnl_read(const int fd, char **s)
 	return (1);
 }
 
-int					ft_get_next_line(const int fd, char **line)
+int				ft_get_next_line(const int fd, char **line)
 {
-	static char		*output_line[10240];
-	char			*ptr;
+	static char	*output_line[10240];
+	char		*ptr;
 
 	ptr = NULL;
 	if ((fd < 0) || (!line) || (fd > 10240))

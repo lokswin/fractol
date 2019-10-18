@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: drafe <drafe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/04/12 20:00:16 by drafe             #+#    #+#              #
-#    Updated: 2019/09/06 17:59:34 by drafe            ###   ########.fr        #
+#    Created: 2019/10/16 19:26:35 by drafe             #+#    #+#              #
+#    Updated: 2019/10/16 19:26:39 by drafe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,16 +37,16 @@ OBJS := $(addprefix $(OBJDIR)/, ft_get_next_line.o ft_memset.o ft_bzero.o\
 all: $(NAME)
 
 $(NAME):$(OBJS)
-	@ar -rc $(NAME) $(OBJS)
+	ar -rc $(NAME) $(OBJS)
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	@rm -rf $(OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
